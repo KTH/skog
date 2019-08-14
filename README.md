@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/KTH/skog.svg?branch=master)](https://travis-ci.org/KTH/skog)
+
 # Skog
 
 Skog is a **singleton logging library for Node.js** that outputs like Bunyan.
