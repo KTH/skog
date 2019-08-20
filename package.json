@@ -4,7 +4,7 @@
   "description": "Skog is a singleton logging library for Node.js that outputs like Bunyan.",
   "main": "index.js",
   "scripts": {
-    "test": "standard"
+    "test": "standard && ava"
   },
   "files": [
     "index.js",
@@ -24,6 +24,7 @@
     "bunyan": "^1.8.12"
   },
   "devDependencies": {
+    "ava": "^2.2.0",
     "standard": "^13.1.0"
   }
 }
