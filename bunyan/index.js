@@ -14,9 +14,9 @@ module.exports = {
   },
 
   child (options, callback) {
-    ns.run(() => {
+    return ns.runAndReturn(async () => {
       ns.set('logger', getCurrentLogger().child(options))
-      callback()
+      return callback()
     })
   },
 
