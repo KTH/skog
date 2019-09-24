@@ -1,14 +1,24 @@
-# Skog
+<div align="center">
+<img src="media/logo.png" width="360">
+<p>
+Declarative logging for Node.js
+</p>
+</div>
+
 
 [![Build Status](https://travis-ci.org/KTH/skog.svg?branch=master)](https://travis-ci.org/KTH/skog)
 
-Skog is a Node.js library on top of Bunyan for logging that keeps track of the child loggers you create.
+Skog is a Node.js library on top of Bunyan for logging that **keeps track of the child loggers** you create.
 
-Install it with `bunyan` (in a future, Winston and Pino will be supported)
+## Installation
+
+Install both `skog` and `bunyan`
 
 ```
 npm install bunyan skog
 ```
+
+## Usage
 
 As early as possible in your application, require and configure `skog/bunyan`.
 
@@ -51,7 +61,10 @@ server.get(async function handleRequest (req, res) {
 })
 ```
 
-## Without Skog
+See the [full example](examples/server.js) and the [log output](examples/server.log)
+
+<details>
+<summary>Without Skog</summary>
 
 Traditionally, with all logging libraries (Bunyan, Winston, Pino...) you create a instance (let's say `logger`) and call the functions of that object.
 
@@ -86,17 +99,27 @@ server.get(async function handleRequest (req, res) {
 })
 ```
 
-# bunynan-like API in `skog/bunyan`
+</details>
 
-Intentionally, the API of `skog/bunyan` is very very similar to `bunyan`. However, all the functions are in the library instead of in a "logger instance":
+# API
 
-## Log creation: `skog.createLogger(options)`
+Intentionally, the API of `skog/bunyan` is very very similar to `bunyan`. However, with Skog, **you don't create a "logger" instance**.
 
-Accepts the same options as the [bunyan Constructor API](https://github.com/trentm/node-bunyan#constructor-api). However `skog.createLogger` does not return anything:
+| Bunyan                           | Skog
+|:---------------------------------|:----------
+| `logger = bunyan.createLogger()` | `skog.createLogger()`
+| `logger.info('hi')`, etc.        | `skog.info('hi')`, etc.
+| `child = logger.child()`         | `skog.child()`
+
+## `skog.createLogger(options)`
+
+Sets up the global Skog instance (internally a Bunyan instance).
+
+Accepts the same options as the [bunyan Constructor API](https://github.com/trentm/node-bunyan#constructor-api) but **without returning anything**:
 
 ```js
 skog.createLogger({
-  name: <string>,                     // Required
+  name: <string>,
   level: <level name or number>,
 
   // Any other fields are added to all log records as is.
@@ -105,29 +128,45 @@ skog.createLogger({
 });
 ```
 
-## Log method API
-
-The `skog/bunyan` logging API is equivalent to the `bunyan` logging API:
+Skog internally will call the Bunyan constructor so you can pass any accepted option by Bunyan. For example, serializers:
 
 ```js
-skog.info('hi')                     // Log a simple string message (or number).
-skog.info('hi %s', bob, anotherVar) // Uses `util.format` for msg formatting.
+const bunyan = require('bunyan')
+const skog = require('skog/bunyan')
 
-skog.info({foo: 'bar'}, 'hi')
-                // The first field can optionally be a "fields" object, which
-                // is merged into the log record.
-// etc.
+skog.createLogger({
+  name: 'my-app',
+  serializers: bunyan.stdSerializers
+})
 ```
 
-## Child loggers: `skog.child(options, callback)`
+## `skog.fatal()`, `skog.info()`...
 
-Skog has also a concept of child logger. However, instead of specializing the logger for a sub-component, it is useful for **specializing the logger for an execution context**.
+The `skog/bunyan` logging API is a subset of the `bunyan` logging API. The following methods are equivalent in Skog and Bunyan and accept the same parameters.
 
-In the following example, a new child logger is created with "request id" information. Whenever `skog` is called *inside the callback*, it will use the child logger (with the request id)
+ Bunyan                      | Skog
+|:---------------------------|:----------
+| `logger.trace('hi')`       | `skog.trace('hi')`
+| `logger.debug('hi')`       | `skog.debug('hi')`
+| `logger.info('hi')`        | `skog.info('hi')`
+| `logger.warn('hi')`        | `skog.warn('hi')`
+| `logger.error('hi')`       | `skog.error('hi')`
+| `logger.fatal('hi')`       | `skog.fatal('hi')`
+
+*Other bunyan methods (like custom levels) are not implemented.*
+
+## `skog.child(options, callback)`
+
+The `.child` method replaces the original `logger.child` method in Bunyan. In Skog you pass a `callback` to the `child` function. When you call `skog` inside the callback, it will call the child logger.
+
+For example, imagine that you want to use a different child logger for every request in an Express server:
 
 ```js
+const skog = require('skog/bunyan')
+skog.createLogger({ name: 'my-app' })
+
 server.get(async function handleRequest (req, res) {
-  // Here we are creating a child logger with a `req_id` field:
+  // Here we are creating a child logger with a `req_id` field
   await skog.child({ req_id: req.id }, async () => {
     // Inside this callback, `skog` is pointing to the child logger:
     skog.debug('<- Incoming request')
@@ -138,7 +177,14 @@ server.get(async function handleRequest (req, res) {
 })
 ```
 
-Note that it works for synchronous and asynchronous functions. The reason is that whatever you return in the callback function, it will be returned by `skog.child`:
+See the full example [here](/examples/server.js)
+
+As you can see in the example, you can pass both a synchronous or an async function.
+
+<details>
+<summary>Explanation</summary>
+
+Whatever you return in the callback function, it will be returned by `skog.child`:
 
 ```js
 const a = skog.child(options, () => {
@@ -146,16 +192,32 @@ const a = skog.child(options, () => {
   return 5
 })
 
-// Now a = 5
+// Now `a` has a value of `5`
 ```
 
 It means, that if you pass an async function as callback (a function that returns a Promise), the promise is returned by `skog.child` and you can `await` it:
 
 ```js
-await skog.child(options, async () => {
+const a = skog.child(options, async () => {
+  // This "callback" function returns a Promise because it is an async function
   skog.info('inside')
 })
 
-// This line is executed after the async function
-something()
+
+// Now "a" is the Promise returned by the callback:
+await a
 ```
+
+This means also that any error thrown by the callback is propagated outside of `skog.child`:
+
+```js
+try {
+  await skog.child({}, async () => {
+    throw new Error()
+  })
+} catch (err) {
+  // Here we get the "Error" thrown inside the callback
+}
+```
+
+</details>
