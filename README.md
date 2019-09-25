@@ -1,14 +1,45 @@
 <div align="center">
 <img src="media/logo.png" width="360">
 <p>
-Declarative logging for Node.js
+Logging with context for Node.js
 </p>
 </div>
 
 
 [![Build Status](https://travis-ci.org/KTH/skog.svg?branch=master)](https://travis-ci.org/KTH/skog)
 
-Skog is a Node.js library on top of Bunyan for logging that **keeps track of the child loggers** you create.
+Skog is a Node.js library on top of Bunyan for logging:
+
+1. **keep the context...**
+
+    <img src="media/logs-skog.png" width="360" alt="caption showing logs without req_id field">
+    <details>
+    <summary>Without context, you have unrelated log lines</summary><br>
+    <img src="media/logs-no-skog.png" width="360" alt="caption showing logs without req_id field">
+    </details>
+
+2. AND **keep the code clean**
+
+    ```js
+    async function getUser (/* No "log" parameter here! */) {
+      skog.info('Getting user...')
+      await sleep(Math.random() * 10)
+      skog.info('Got the user!')
+    }
+    ```
+
+    <details>
+    <summary>Without Skog you need a `log` parameter or similar in `getUser`</summary><br>
+    ```js
+    async function getUser (log) {
+      log.info('Getting user...')
+      await sleep(Math.random() * 10)
+      log.info('Got the user!')
+    }
+    ```
+    </details>
+
+*(Keep in mind: the two solutions "without Skog" shown above could be enough for your app)*
 
 ## Installation
 
@@ -40,7 +71,7 @@ async function getUser () {
 }
 ```
 
-For real, it keeps track of the child loggers **without passing them everywhere**. For example, if you want to create one per request in your Express server:
+For real, it keeps track of the child loggers **without passing them everywhere**. For example, if you want to create one child logger per request, you just need to adjust the place where you actually create the logger:
 
 
 ```js
@@ -61,45 +92,10 @@ server.get(async function handleRequest (req, res) {
 })
 ```
 
-See the [full example](examples/server.js) and the [log output](examples/server.log)
+### Examples:
 
-<details>
-<summary>Without Skog</summary>
-
-Traditionally, with all logging libraries (Bunyan, Winston, Pino...) you create a instance (let's say `logger`) and call the functions of that object.
-
-If you need the `logger` across several modules, you need to pass that object around. Specially if you want to use child logging:
-
-```js
-const bunyan = require('bunyan')
-const logger1 = bunyan.createLogger({
-  name: 'my-app',
-  level: 0
-})
-
-async function getUser (logger) {
-  logger.info('Reading DB ')
-  await longTask()
-  logger.info('DB read!   ')
-}
-
-async function getPosts (user, logger) {
-  logger.info('Calling API')
-  await longTask()
-  logger.info('API called!')
-}
-
-server.get(async function handleRequest (req, res) {
-  const logger2 = logger1.child({ req_id: req.id })
-  logger2.debug('<- Incoming request')
-  const user = await getUser(logger2)
-  const posts = await getPosts(user, logger2)
-  logger2.debug('-> Sending response')
-  logger2.send(posts)
-})
-```
-
-</details>
+- See the [full example](examples/server.js) and the [log output](examples/server.log)
+- You can compare with a version [using Bunyan children logging](examples/no-skog.js) and with the version [without any context at all](examples/no-req.js).
 
 # API
 
@@ -176,8 +172,6 @@ server.get(async function handleRequest (req, res) {
   })
 })
 ```
-
-See the full example [here](/examples/server.js)
 
 As you can see in the example, you can pass both a synchronous or an async function.
 

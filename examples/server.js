@@ -1,14 +1,26 @@
 /*
- * Example implementing a fake server and fake parallel requests
- * to show how Skog works
+ * Example implementing a fake server and fake parallel requests to show how
+ * Skog is keeping data between functions.
  *
- *   `server.log` contains the logs output after running this example.
+ * This example has three elements:
+ * - `getUser` - a function simulating a long task (like fetching a user from a
+ *   database).
  *
- * You can see how logs can be in different order but they all have the "req_id"
- * field that can be used to connect each pair of logs.
+ * - `server(req)` - a function simulating a server accepting requests
+ *
+ * - `clients` - a function that simulates some requests. They come in random
+ *   intervals
+ *
+ * In this example, "getUser" will output two log lines with a random delay in
+ * between. Thanks to Skog:
+ * - both log lines will contain the "req_id" useful to link both log lines
+ *   even when more log lines are in between
+ * - `getUser` does not receive neither `req_id` nor `log` as parameter.
+ *
+ * The file `server.log` in this same directory contains the log output.
  */
 
-// In your project, you require 'skog/bunyan'
+// In your project, you require 'skog/bunyan' instead
 const skog = require('../bunyan')
 
 // Initialize the logger
@@ -28,9 +40,9 @@ const sleep = time => new Promise((resolve) => setTimeout(resolve, time))
 async function getUser () {
   skog.info('Getting user...')
 
-  // We provoke here a random delay from 10-20 ms
+  // We provoke here a random delay from 0-10 ms
   // This way calls to this function finish in different order
-  await sleep(Math.floor(Math.random() * 10) + 10)
+  await sleep(Math.random() * 10)
   skog.info('Got the user!')
 }
 
@@ -47,10 +59,11 @@ async function server (req) {
 }
 
 function clients () {
-  for (let i = 0; i < 100; i++) {
-    server({
-      id: i
-    })
+  for (let i = 1; i <= 10; i++) {
+    // To add more randomness, the requests themself will be triggered
+    // with a delay of 20-70 ms.
+    sleep(20 + Math.random() * 50)
+      .then(() => server({ id: i }))
   }
 }
 
