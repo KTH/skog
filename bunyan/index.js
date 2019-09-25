@@ -2,7 +2,7 @@ const bunyan = require('bunyan')
 const { createNamespace } = require('cls-hooked')
 const ns = createNamespace('skog/bunyan')
 
-let log = require('./defaultLogger')
+let log
 
 function getCurrentLogger () {
   return ns.get('logger') || log
@@ -18,6 +18,10 @@ module.exports = {
       ns.set('logger', getCurrentLogger().child(options))
       return callback()
     })
+  },
+
+  get logger () {
+    return getCurrentLogger()
   },
 
   trace: (...args) => getCurrentLogger().trace(...args),

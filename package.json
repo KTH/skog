@@ -20,8 +20,9 @@
   "dependencies": {
     "cls-hooked": "^4.2.2"
   },
-  "optionalDependencies": {
-    "bunyan": "^1.8.12"
+  "optionalDependencies": {},
+  "peerDependencies": {
+    "bunyan": "^1.8.0"
   },
   "devDependencies": {
     "ava": "^2.2.0",
