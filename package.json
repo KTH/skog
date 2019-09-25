@@ -1,6 +1,6 @@
 {
   "name": "skog",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Skog is a singleton logging library for Node.js that outputs like Bunyan.",
   "main": "index.js",
   "scripts": {
