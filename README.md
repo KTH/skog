@@ -149,6 +149,8 @@ The `skog/bunyan` logging API is a subset of the `bunyan` logging API. The follo
 | `logger.error('hi')`       | `skog.error('hi')`
 | `logger.fatal('hi')`       | `skog.fatal('hi')`
 
+**Warning**. Remember to call `skog.createLogger` before you call these functions. Right now, we are still thinking on how Skog should behave if you don't call `skog.createLogger` (throw an error, use a default logger...?) so do not assume any behavior upon this.
+
 *Other bunyan methods (like custom levels) are not implemented.*
 
 ## `skog.child(options, callback)`
