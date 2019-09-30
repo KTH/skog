@@ -43,32 +43,28 @@ Skog is a Node.js library on top of Bunyan for logging:
 
 ## Features
 
-- **Opinionated and familiar API**. Use conventional functions for logging: `fatal`, `error`, `warn`, `info`, `debug` and `trace`.
+- **Opinionated and familiar API**. Use *only* conventional functions for logging: `fatal`, `error`, `warn`, `info`, `debug` and `trace`.
 - **Lightweight**. [Less than 300 kB](https://packagephobia.now.sh/result?p=skog) mainly because we don't install any logger.
-- **Flexible**. We only support Bunyan out of the box, but you can use Skog with any logger library.
+- **Flexible**. We only support Bunyan out of the box, but you can use Skog with **any** logger library.
 
 ## Installation
 
-Install both `skog` and `bunyan`
-
-```
-npm install bunyan skog
-```
+Install `skog` with `npm install skog` (or use `yarn`)
 
 ## Usage
 
-As early as possible in your application, require and configure `skog/bunyan`.
+As early as possible in your application, require `skog` and set a logger. You can use whatever library you want. In this example, we use `pino`:
 
 ```js
-require('skog/bunyan').createLogger({
-  name: 'my-app'
-})
+const skog = require('skog')
+
+skog.logger = require('pino')({ name: 'skog-with-pino' })
 ```
 
 Then, in your modules, call the Skog functions like a regular library. Skog keeps track of the child loggers:
 
 ```js
-const skog = require('skog/bunyan')
+const skog = require('skog')
 
 async function getUser () {
   skog.info('Reading DB ')
@@ -79,9 +75,8 @@ async function getUser () {
 
 For real, it keeps track of the child loggers **without passing them everywhere**. For example, if you want to create one child logger per request, you just need to adjust the place where you actually create the logger:
 
-
 ```js
-const skog = require('skog/bunyan')
+const skog = require('skog')
 
 server.get(async function handleRequest (req, res) {
   // Here we are creating a child logger with a `req_id` field:
