@@ -30,6 +30,7 @@ Skog is a Node.js library on top of Bunyan for logging:
 
     <details>
     <summary>Without Skog you need a `log` parameter or similar in `getUser`</summary><br>
+
     ```js
     async function getUser (log) {
       log.info('Getting user...')
@@ -37,9 +38,13 @@ Skog is a Node.js library on top of Bunyan for logging:
       log.info('Got the user!')
     }
     ```
+
     </details>
 
-*(Keep in mind: the two solutions "without Skog" shown above could be enough for your app)*
+## Features
+
+- **Lightweight**. Mainly because we don't install any logger library [![install size](https://packagephobia.now.sh/badge?p=skog)](https://packagephobia.now.sh/result?p=skog)
+- **Flexible**. We only support Bunyan out of the box, but you can use it with any logger library.
 
 ## Installation
 
