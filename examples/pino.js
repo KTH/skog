@@ -23,6 +23,7 @@
 // In your project, you require 'skog' instead
 const skog = require('..')
 
+// Here we are setting the logger
 const logger = require('pino')()
 skog.logger = logger
 
