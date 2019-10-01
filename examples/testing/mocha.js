@@ -1,7 +1,9 @@
+/* eslint-env mocha */
+
 process.env.NODE_ENV = 'test'
 /** Test file example implemented with Mocha */
 const skog = require('../../index')
-const assert = require('assert')
+const assert = require('assert').strict
 
 function sum (a, b) {
   skog.info(`Hello from the "sum" function! ${a}+${b}`)
