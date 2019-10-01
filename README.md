@@ -95,13 +95,22 @@ server.get(async function handleRequest (req, res) {
 
 ### Recipes
 
-See the full example explained above, implemented in various ways:
+#### Node.js server application
 
-- [With Bunyan](examples/bunyan.js). Here you can see the [log output](examples/bunyan.log)
-- [With Pino](examples/pino.js).
-- [With a custom logging library](examples/custom.js).
-- You can compare with a version [using Bunyan children logging](examples/no-skog.js) and with the version [without any context at all](examples/no-req.js).
+[Example of a server application](examples/server/README.md)
 
+- [With Bunyan](examples/server/bunyan.js).
+- [With Pino](examples/server/pino.js).
+- [With a custom logging library](examples/server/custom.js).
+
+#### Skog during testing
+
+When testing and in CI environments, you might not want to use Bunyan since it puts **too much** information to the logs.
+
+[The example on executing Skog when testing](examples/testing/README.md) shows how can you integrate Skog with testing libraries:
+
+- [With AVA](examples/testing/ava.js)
+- [With Mocha](examples/testing/mocha.js)
 
 ---
 

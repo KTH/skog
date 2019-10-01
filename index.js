@@ -1,14 +1,16 @@
 const { createNamespace } = require('cls-hooked')
 const ns = createNamespace('skog')
 
+function noop () {}
+
 const defaultLogger = {
-  trace: (...args) => console.trace(...args),
-  debug: (...args) => console.debug(...args),
-  info: (...args) => console.info(...args),
-  warn: (...args) => console.warn(...args),
-  error: (...args) => console.error(...args),
-  fatal: (...args) => console.error(...args),
-  child: () => {}
+  trace: (...args) => process.env.NODE_ENV === 'test' ? noop : console.trace(...args),
+  debug: (...args) => process.env.NODE_ENV === 'test' ? noop : console.debug(...args),
+  info: (...args) => process.env.NODE_ENV === 'test' ? noop : console.info(...args),
+  warn: (...args) => process.env.NODE_ENV === 'test' ? noop : console.warn(...args),
+  error: (...args) => process.env.NODE_ENV === 'test' ? noop : console.error(...args),
+  fatal: (...args) => process.env.NODE_ENV === 'test' ? noop : console.error(...args),
+  child: noop
 }
 
 function getCurrentLogger () {

@@ -1,0 +1,15 @@
+{
+  "name": "skog-example-testing",
+  "version": "1.0.0",
+  "description": "When executing tests, specially in CI environments, it is useful to **mute** the logger or have some simple `console` logger.",
+  "main": "ava.js",
+  "scripts": {
+    "test": "ava ava.js --verbose"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ava": "^2.4.0"
+  }
+}
