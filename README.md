@@ -93,7 +93,7 @@ server.get(async function handleRequest (req, res) {
 })
 ```
 
-### Examples:
+### Recipes
 
 See the full example explained above, implemented in various ways:
 

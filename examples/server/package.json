@@ -6,8 +6,7 @@
   "author": "KTH Royal Institute of Technology",
   "license": "MIT",
   "dependencies": {
-    "pino": "^5.13.4",
-    "webpack-log": "^3.0.1"
+    "pino": "^5.13.4"
   },
   "devDependencies": {
     "pino-pretty": "^3.2.1"

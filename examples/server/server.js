@@ -9,7 +9,7 @@
 
 // See how we don't need to configure anything from this module. Just require
 // skog.
-const skog = require('..')
+const skog = require('../..')
 
 // This one is just a "sleep" function that we are going to use to simulate a
 // "long task"
