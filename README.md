@@ -43,9 +43,9 @@ Skog is a Node.js library on top of Bunyan for logging:
 
 ## Features
 
-- **Opinionated and familiar API**. Use *only* conventional functions for logging: `fatal`, `error`, `warn`, `info`, `debug` and `trace`.
-- **Lightweight**. [Less than 300 kB](https://packagephobia.now.sh/result?p=skog) mainly because we don't install any logger.
-- **Flexible**. We only support Bunyan out of the box, but you can use Skog with **any** logger library.
+- **Opinionated and familiar API**. Use *only* these conventional functions for logging: `fatal`, `error`, `warn`, `info`, `debug` and `trace`.
+- **Lightweight**. [Less than 300 kB](https://packagephobia.now.sh/result?p=skog) mainly because Skog doesn't come with any logging library.
+- **Flexible**. We offer functions specifically made for Bunyan out of the box, but you can use Skog with **any** logger library.
 
 ## Installation
 
@@ -95,8 +95,15 @@ server.get(async function handleRequest (req, res) {
 
 ### Examples:
 
-- See the [full example](examples/server.js) and the [log output](examples/server.log)
+See the full example explained above, implemented in various ways:
+
+- [With Bunyan](examples/bunyan.js). Here you can see the [log output](examples/bunyan.log)
+- [With Pino](examples/pino.js).
+- [With a custom logging library](examples/custom.js).
 - You can compare with a version [using Bunyan children logging](examples/no-skog.js) and with the version [without any context at all](examples/no-req.js).
+
+
+---
 
 # API
 

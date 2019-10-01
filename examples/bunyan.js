@@ -23,7 +23,7 @@ require('../bunyan').createLogger({
 // This "clients" function simulates 10 requests with random delays in between
 async function clients () {
   for (let i = 1; i <= 10; i++) {
-    await sleep(20 + Math.random() * 50)
+    await sleep(Math.random() * 10)
     server({ id: i })
   }
 }
