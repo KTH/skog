@@ -60,11 +60,9 @@ Install `skog` with `npm install skog` (or use `yarn`)
     npm i bunyan
     ```
 
-2.  As early as possible in your application, require `skog` and set a logger. You can use whatever library you want. In this example, we use `pino`:
+2.  As early as possible in your application, require `skog/bunyan` to initialize the logger
 
     ```js
-    const skog = require('skog')
-
     require('skog/bunyan').createLogger({
       name: 'my-app'
     })
