@@ -52,47 +52,46 @@ Skog is a Node.js library on top of Bunyan for logging:
 
 Install `skog` with `npm install skog` (or use `yarn`)
 
-## Usage
+## Usage with bunyan
 
-As early as possible in your application, require `skog` and set a logger. You can use whatever library you want. In this example, we use `pino`:
+1. Install Bunyan because it is not shipped with `skog`
 
-```js
-const skog = require('skog')
+    ```
+    npm i bunyan
+    ```
 
-skog.logger = require('pino')({ name: 'skog-with-pino' })
-```
+2.  As early as possible in your application, require `skog` and set a logger. You can use whatever library you want. In this example, we use `pino`:
 
-<details>
-<summary>If you are using Bunyan, do this instead!</summary><br>
+    ```js
+    const skog = require('skog')
 
-```js
-require('skog/bunyan').createLogger({
-  name: 'my-app'
-})
-```
+    require('skog/bunyan').createLogger({
+      name: 'my-app'
+    })
+    ```
 
-You can pass anything like you would do in the actual bunyan constructor:
+    You can pass anything like you would do in the actual bunyan constructor:
 
-```js
-require('skog/bunyan').createLogger({
-  name: 'my-app',
-  serializers: require('bunyan').stdSerializers
-})
-```
+    ```js
+    require('skog/bunyan').createLogger({
+      name: 'my-app',
+      serializers: require('bunyan').stdSerializers
+    })
+    ```
 
-</details>
+3. Then, in your modules, call the Skog functions like a regular library. Skog keeps track of the child loggers:
 
-Then, in your modules, call the Skog functions like a regular library. Skog keeps track of the child loggers:
+    ```js
+    const skog = require('skog')
 
-```js
-const skog = require('skog')
+    async function getUser () {
+      skog.info('Reading DB ')
+      await longTask()
+      skog.info('DB read!   ')
+    }
+    ```
 
-async function getUser () {
-  skog.info('Reading DB ')
-  await longTask()
-  skog.info('DB read!   ')
-}
-```
+----
 
 For real, it keeps track of the child loggers **without passing them everywhere**. For example, if you want to create one child logger per request, you just need to adjust the place where you actually create the logger:
 
@@ -114,17 +113,24 @@ server.get(async function handleRequest (req, res) {
 })
 ```
 
-### Recipes
+----
 
-#### Node.js server application
+## Recipes
 
-[Example of a server application](examples/server/README.md)
+### With Express
+
+[Example with Express](examples/express/)
+
+
+### Node.js server application
+
+[Example of a server application](examples/server/)
 
 - [With Bunyan](examples/server/bunyan.js).
 - [With Pino](examples/server/pino.js).
 - [With a custom logging library](examples/server/custom.js).
 
-#### Skog during testing
+### Skog during testing
 
 When testing and in CI environments, you might not want to use Bunyan since it puts **too much** information to the logs.
 

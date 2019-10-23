@@ -1,0 +1,13 @@
+{
+  "name": "skog-examples",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "KTH Royal Institute of Technology",
+  "license": "MIT",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "cuid": "^2.1.6",
+    "express": "^4.17.1"
+  }
+}
