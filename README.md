@@ -12,11 +12,12 @@ Skog is a Node.js library on top of Bunyan for logging:
 
 1. **keep the context...**
 
-    <img src="media/logs-skog.png" width="360" alt="caption showing logs without req_id field">
-    <details>
-    <summary>Without context, you have unrelated log lines</summary><br>
-    <img src="media/logs-no-skog.png" width="360" alt="caption showing logs without req_id field">
-    </details>
+    <div align="center">
+    <figure>
+    <img src="media/logs.png" width="720">
+    <figcaption><i>(Left side with context, right without context)</i></figcaption>
+    </figure>
+    </div>
 
 2. AND **keep the code clean**
 
