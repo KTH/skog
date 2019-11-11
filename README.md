@@ -13,10 +13,8 @@ Skog is a Node.js library on top of Bunyan for logging:
 1. **keep the context...**
 
     <div align="center">
-    <figure>
     <img src="media/logs.png" width="720">
-    <figcaption><i>(Left side with context, right without context)</i></figcaption>
-    </figure>
+    <p><i>(Left side with context, right without context)</i></p>
     </div>
 
 2. AND **keep the code clean**
