@@ -25,7 +25,8 @@
   },
   "optionalDependencies": {},
   "peerDependencies": {
-    "bunyan": "^1.8.0"
+    "bunyan": "^1.8.0",
+    "pino": "^6.6.0"
   },
   "devDependencies": {
     "ava": "^2.2.0",
