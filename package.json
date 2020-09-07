@@ -6,6 +6,7 @@
     ".": "./lib/index.js",
     "./bunyan": "./lib/bunyan.js"
   },
+  "types": "src/index.d.ts",
   "type": "module",
   "scripts": {
     "test": "standard && ava"
