@@ -2,13 +2,16 @@
   "name": "skog",
   "version": "1.0.0-alpha.1",
   "description": "Skog is a singleton logging library for Node.js that outputs like Bunyan.",
-  "main": "index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./bunyan": "./lib/bunyan.js"
+  },
+  "type": "module",
   "scripts": {
     "test": "standard && ava"
   },
   "files": [
-    "index.js",
-    "bunyan"
+    "lib"
   ],
   "keywords": [
     "logging",

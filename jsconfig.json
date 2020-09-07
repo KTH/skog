@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "skog": ["lib/index"]
+    },
+  },
+  "include": [
+    "lib/**/*",
+    "examples/**/*",
+    "test/**/*"
+  ]
+}
