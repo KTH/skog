@@ -4,7 +4,7 @@ const ns = createNamespace('skog')
 function noop () {}
 
 const defaultLogger = {
-  trace: (...args) => process.env.NODE_ENV === 'test' ? noop : console.trace(...args),
+  trace: (...args) => process.env.NODE_ENV === 'test' ? noop : console.log(...args),
   debug: (...args) => process.env.NODE_ENV === 'test' ? noop : console.debug(...args),
   info: (...args) => process.env.NODE_ENV === 'test' ? noop : console.info(...args),
   warn: (...args) => process.env.NODE_ENV === 'test' ? noop : console.warn(...args),
