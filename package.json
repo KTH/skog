@@ -2,9 +2,10 @@
   "name": "skog",
   "version": "1.0.1-alpha.0",
   "description": "Skog is a singleton logging library for Node.js that outputs like Bunyan.",
-  "main": "index.js",
+  "main": "src/index.js",
   "scripts": {
-    "test": "standard && ava"
+    "format": "prettier --write .",
+    "test": "prettier --check ."
   },
   "files": [
     "index.js",
@@ -22,11 +23,12 @@
   },
   "optionalDependencies": {},
   "peerDependencies": {
-    "bunyan": "^1.8.0"
+    "bunyan": "^1.8.0",
+    "pino": "^6.11.1"
   },
   "devDependencies": {
     "ava": "^3.13.0",
     "bunyan": "^1.8.12",
-    "standard": "^13.1.0"
+    "prettier": "^2.2.1"
   }
 }
