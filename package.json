@@ -16,7 +16,10 @@
     "bunyan",
     "singleton"
   ],
-  "author": "Royal Institute of Technology",
+  "author": {
+    "name": "KTH Royal Institute of Technology",
+    "email": "vc.developers@kth.se"
+  },
   "license": "MIT",
   "dependencies": {
     "cls-hooked": "^4.2.2",
