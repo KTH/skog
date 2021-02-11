@@ -9,8 +9,7 @@
     "build": "npm test"
   },
   "files": [
-    "index.js",
-    "bunyan"
+    "src"
   ],
   "keywords": [
     "logging",
