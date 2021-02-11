@@ -5,7 +5,8 @@
   "main": "src/index.js",
   "scripts": {
     "format": "prettier --write .",
-    "test": "prettier --check ."
+    "test": "prettier --check .",
+    "build": "npm test"
   },
   "files": [
     "index.js",
