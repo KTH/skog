@@ -19,7 +19,8 @@
   "author": "Royal Institute of Technology",
   "license": "MIT",
   "dependencies": {
-    "cls-hooked": "^4.2.2"
+    "cls-hooked": "^4.2.2",
+    "cuid": "^2.1.8"
   },
   "optionalDependencies": {},
   "peerDependencies": {
@@ -29,6 +30,7 @@
   "devDependencies": {
     "ava": "^3.13.0",
     "bunyan": "^1.8.12",
+    "pino": "^6.11.1",
     "prettier": "^2.2.1"
   }
 }

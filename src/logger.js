@@ -34,11 +34,11 @@ module.exports = {
     });
   },
 
-  get logger() {
+  getLogger() {
     return getCurrentLogger();
   },
 
-  set logger(newLogger) {
+  setLogger(newLogger) {
     return setCurrentLogger(newLogger);
   },
 

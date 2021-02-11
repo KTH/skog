@@ -1,28 +1,27 @@
 const cuid = require("cuid");
-const skog = require("..");
-const { trace, debug, info, warn, error, fatal, child } = require("./logger");
+const logger = require("./logger");
 const init = {
   pino(options) {
-    skog.logger = require("pino")(options);
+    logger.setLogger(require("pino")(options));
   },
   bunyan(options) {
-    skog.logger = require("bunyan").createLogger(options);
+    logger.setLogger(require("bunyan").createLogger(options));
   },
 };
 
 function middleware(req, res, next) {
-  child({ req_id: cuid() }, next);
+  logger.child({ req_id: cuid() }, next);
 }
 
 module.exports = {
   init,
   middleware,
 
-  trace,
-  debug,
-  info,
-  warn,
-  error,
-  fatal,
-  child,
+  trace: logger.trace,
+  debug: logger.debug,
+  info: logger.info,
+  warn: logger.warn,
+  error: logger.error,
+  fatal: logger.fatal,
+  child: logger.child,
 };
