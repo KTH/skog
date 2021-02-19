@@ -1,8 +1,8 @@
 const cuid = require("cuid");
 const logger = require("./logger");
 const init = {
-  pino(options) {
-    logger.setLogger(require("pino")(options));
+  pino(fields = {}, options = {}) {
+    logger.setLogger(require("pino")(options).child(fields));
   },
   bunyan(options) {
     logger.setLogger(require("bunyan").createLogger(options));
