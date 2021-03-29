@@ -63,7 +63,7 @@ app.get("/", (req, res) => {
 // You can also call `skog` from a different function.
 // This is called inside a request so it will also log the "request ID"
 // It will work even if the function is in a different file!
-function anotherFunction () {
+function anotherFunction() {
   log.info("Hello from another function");
 }
 
@@ -85,9 +85,9 @@ You can create your own middleware by using the `log.child` function:
 app.use(function customMiddleware(req, res, next) {
   log.child(
     { my_parameter: "my_value" },
-    next, // Yes, you need to pass here the "next" function
+    next // Yes, you need to pass here the "next" function
   );
-})
+});
 ```
 
 ### Customize the logger
