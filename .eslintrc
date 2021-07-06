@@ -1,0 +1,6 @@
+{
+  "extends": ["@kth/eslint-config-kth"],
+  "rules": {
+    "no-console": "off"
+  }
+}

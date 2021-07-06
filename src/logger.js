@@ -1,4 +1,5 @@
 const { createNamespace } = require("cls-hooked");
+
 const ns = createNamespace("skog");
 
 const defaultLogger = {

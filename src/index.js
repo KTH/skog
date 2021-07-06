@@ -1,5 +1,6 @@
 const cuid = require("cuid");
 const logger = require("./logger");
+
 const init = {
   pino(fields = {}, options = {}) {
     logger.setLogger(require("pino")(options).child(fields));
