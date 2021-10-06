@@ -25,19 +25,13 @@
   "license": "MIT",
   "dependencies": {
     "cls-hooked": "^4.2.2",
-    "cuid": "^2.1.8"
-  },
-  "optionalDependencies": {},
-  "peerDependencies": {
-    "bunyan": "^1.8.0",
-    "pino": "^6.11.1"
+    "cuid": "^2.1.8",
+    "pino": "^6.13.3"
   },
   "devDependencies": {
     "@kth/eslint-config-kth": "^1.0.10",
     "ava": "^3.13.0",
-    "bunyan": "^1.8.12",
     "eslint": "^7.30.0",
-    "pino": "^6.11.1",
     "prettier": "^2.2.1"
   }
 }
