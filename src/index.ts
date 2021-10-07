@@ -1,64 +1,56 @@
+// eslint-disable no-unused-vars @typescript-eslint/no-explicit-any
 import { createNamespace } from "cls-hooked";
 import cuid from "cuid";
+// eslint-disable-next-line import/no-unresolved
 import { NextFunction, Request } from "express";
-import pino, { LoggerOptions } from "pino";
-
-interface ObjectWithoutMsg {
-  msg: never;
-}
-
-/** Emits bunyan-formatted logs */
-interface LogFunction {
-  (msg: string, ...args: any[]): void;
-  (obj: any): void;
-  (obj: ObjectWithoutMsg, msg?: string, ...args: any[]): void;
-  (err: Error, msg?: string, ...args: any[]): void;
-}
+import pino, { LoggerOptions, LogFn, Bindings } from "pino";
 
 /** A logger with 6 levels */
 interface Logger {
-  trace: LogFunction;
-  debug: LogFunction;
-  info: LogFunction;
-  warn: LogFunction;
-  error: LogFunction;
-  fatal: LogFunction;
+  trace: LogFn;
+  debug: LogFn;
+  info: LogFn;
+  warn: LogFn;
+  error: LogFn;
+  fatal: LogFn;
 }
+
+type LogFnArguments = Parameters<LogFn>;
 
 /** A logger that can have "child" loggers */
 interface ExtendableLogger extends Logger {
-  child(options: any): Logger;
+  child(options: Bindings): Logger;
 }
 
 // This is the object exposed as API of "skog".
 interface Skog extends Logger {
   logger: ExtendableLogger;
-  child<T>(options: any, callback: () => T): T;
+  child<T>(options: Bindings, callback: () => T): T;
 }
 
 // Default logger. If "init" is not called, default logger is just `console`
 // This prevents apps to crash when logger is not initialized, for example
 // during tests
 const defaultLogger: ExtendableLogger = {
-  trace(...args: any[]) {
+  trace(...args: LogFnArguments) {
     console.log(...args);
   },
-  debug(...args: any[]) {
+  debug(...args: LogFnArguments) {
     console.log(...args);
   },
-  info(...args: any[]) {
+  info(...args: LogFnArguments) {
     console.log(...args);
   },
-  warn(...args: any[]) {
+  warn(...args: LogFnArguments) {
     console.log(...args);
   },
-  error(...args: any[]) {
+  error(...args: LogFnArguments) {
     console.log(...args);
   },
-  fatal(...args: any[]) {
+  fatal(...args: LogFnArguments) {
     console.log(...args);
   },
-  child(options: any) {
+  child() {
     return defaultLogger;
   },
 };
@@ -82,31 +74,31 @@ function setCurrentLogger(newLogger: ExtendableLogger) {
 }
 
 const skog: Skog = {
-  trace(...args) {
+  trace(...args: LogFnArguments) {
     getCurrentLogger().trace(...args);
   },
 
-  debug(...args) {
+  debug(...args: LogFnArguments) {
     getCurrentLogger().debug(...args);
   },
 
-  info(...args) {
+  info(...args: LogFnArguments) {
     getCurrentLogger().info(...args);
   },
 
-  warn(...args) {
+  warn(...args: LogFnArguments) {
     getCurrentLogger().warn(...args);
   },
 
-  error(...args) {
+  error(...args: LogFnArguments) {
     getCurrentLogger().error(...args);
   },
 
-  fatal(...args) {
+  fatal(...args: LogFnArguments) {
     getCurrentLogger().fatal(...args);
   },
 
-  child<T = any>(options: any, callback: () => T): T {
+  child<T>(options: Bindings, callback: () => T): T {
     return namespace.runAndReturn(() => {
       namespace.set("logger", getCurrentLogger().child(options));
       return callback();
@@ -128,7 +120,10 @@ const skog: Skog = {
  * @param fields An object with fields like `app` that will be included in logs
  * @param options Options for Pino
  */
-export function initializeLogger(fields?: any, options?: LoggerOptions) {
+export function initializeLogger(
+  fields: Bindings = {},
+  options: LoggerOptions = {}
+): void {
   const pinoLogger = pino(options).child(fields);
   setCurrentLogger(pinoLogger);
 }
@@ -137,7 +132,7 @@ export function skogMiddleware(
   req: Request,
   res: Response,
   next: NextFunction
-) {
+): void {
   skog.child({ req_id: cuid() }, next);
 }
 
