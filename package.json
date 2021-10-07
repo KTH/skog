@@ -6,10 +6,11 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "format": "prettier --write .",
-    "test": "npm run test:format && npm run test:lint",
+    "test": "npm run build && npm run test:format && npm run test:lint",
     "test:format": "prettier --check .",
     "test:lint": "eslint src",
-    "build": "npm test"
+    "build": "tsc",
+    "prepublish": "npm test && npm run build"
   },
   "files": [
     "dist"
@@ -31,6 +32,10 @@
   },
   "devDependencies": {
     "@kth/eslint-config-kth": "^1.0.10",
+    "@types/cls-hooked": "^4.3.3",
+    "@types/express": "^4.17.13",
+    "@types/pino": "^6.3.11",
+    "@typescript-eslint/eslint-plugin": "^4.33.0",
     "ava": "^3.13.0",
     "eslint": "^7.30.0",
     "prettier": "^2.2.1",

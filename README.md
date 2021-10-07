@@ -22,26 +22,24 @@ log.info("Hello!!");
 ## Features
 
 - **Opinionated and familiar API**. Use _only_ these conventional functions for logging: `fatal`, `error`, `warn`, `info`, `debug` and `trace`.
-- **[Lightweight](https://packagephobia.now.sh/result?p=skog)** mainly because Skog doesn't come with any logging library.
-- **Flexible**. We offer functions specifically made for Bunyan and pino out of the box, but you can use Skog with **any** logger library (including `console`)
+- **Flexible**. We offer functions specifically made for Pino out of the box, but you can use Skog with **any** logger library (including `console`)
 
 ## Getting started
 
-Install `skog` alongside with a logger (for example, pino)
+Install `skog`
 
 ```
-npm i skog pino
+npm i skog
 ```
 
 Example with express:
 
 ```js
-const log = require("skog");
-const express = require("express");
+import log, { initializeLogger, skogMiddleware } from "skog";
+import express from "express";
 
 // Initialize the logger.
-// - If you use `.init.pino` you can pass the same parameters as in pino
-log.init.pino({
+initializeLogger({
   app: "example application",
 });
 
@@ -49,7 +47,7 @@ const app = express();
 
 // If you want to use our middleware, add it!
 // - It will create a field called `req_id` (request id) for each request
-app.use(log.middleware);
+app.use(skogMiddleware);
 
 app.get("/", (req, res) => {
   // Then, use "log" as if you would do in a normal library.
@@ -82,6 +80,8 @@ The `log.middleware` shipped with skog creates a "child logger" and adds a field
 You can create your own middleware by using the `log.child` function:
 
 ```js
+import log from "skog";
+
 app.use(function customMiddleware(req, res, next) {
   log.child(
     { my_parameter: "my_value" },
@@ -92,9 +92,7 @@ app.use(function customMiddleware(req, res, next) {
 
 ### Customize the logger
 
-Skog is shipped with constructors for `bunyan` and `pino`.
-
-If you want to use a different logger, use `log.setLogger` instead of initializing. The `customLogger` must be an object that maches this interface:
+If you want to use a different logger, use `log.logger`. The logger you set must have:
 
 - 6 logging functions (called trace, debug, info, warn, error and fatal) that accept an arbitrary number of arguments and return nothing
 - A "child" function that accepts one argument and returns a new logger
@@ -102,18 +100,16 @@ If you want to use a different logger, use `log.setLogger` instead of initializi
 For example, if you want to use `console` for logging and not do anything special for `child`:
 
 ```js
-const log = require("skog");
+import log from "skog";
 
 const customLogger = {
   trace: (...args) => console.log(...args),
-  debug: (...args) => console.debug(...args),
+  debug: (...args) => console.log(...args),
   info: (...args) => console.info(...args),
   warn: (...args) => console.warn(...args),
   error: (...args) => console.error(...args),
   fatal: (...args) => console.error(...args),
   child: () => customLogger,
 };
-log.setLogger(customLogger);
+log.logger = customLogger;
 ```
-
-(actually it is the default logger if you don't initialize it)
