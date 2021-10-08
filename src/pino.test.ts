@@ -10,12 +10,16 @@ test("`skog` uses `pino` if initialized", async () => {
 
   const dir = fs.mkdtempSync(os.tmpdir());
   const p = path.resolve(dir, "something.txt");
-  initializeLogger({ app: "test-app" }, pino.destination(p));
+  initializeLogger(
+    { app: "test-app" },
+    { base: undefined },
+    pino.destination(p)
+  );
 
   log.info("Hello");
 
   expect(fs.readFileSync(p, { encoding: "utf-8" })).toMatchInlineSnapshot(`
-    "{\\"level\\":30,\\"time\\":1487076708000,\\"pid\\":18185,\\"hostname\\":\\"saito\\",\\"app\\":\\"test-app\\",\\"msg\\":\\"Hello\\"}
+    "{\\"level\\":30,\\"time\\":1487076708000,\\"app\\":\\"test-app\\",\\"msg\\":\\"Hello\\"}
     "
   `);
 });
