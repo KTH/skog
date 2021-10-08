@@ -155,8 +155,8 @@ export function initializeLogger(
 }
 
 export function skogMiddleware(
-  req: Request,
-  res: Response,
+  req: unknown,
+  res: unknown,
   next: NextFunction
 ): void {
   skog.child({ req_id: cuid() }, next);
