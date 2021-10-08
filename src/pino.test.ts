@@ -5,13 +5,15 @@ import path from "path";
 import log, { initializeLogger } from "./index";
 
 test("`skog` uses `pino` if initialized", async () => {
-  // Mock time
+  // We mock "current date" to have consistent tests
   Date.now = jest.fn(() => 1487076708000);
 
   const dir = fs.mkdtempSync(os.tmpdir());
   const p = path.resolve(dir, "something.txt");
   initializeLogger(
     { app: "test-app" },
+    // We pass this parameter to avoid including "host" and "pid" in logs
+    // in order to have consistent tests
     { base: undefined },
     pino.destination(p)
   );
