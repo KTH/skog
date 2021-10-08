@@ -118,13 +118,39 @@ const skog: Skog = {
  * Initialize the Skog logger with Pino
  *
  * @param fields An object with fields like `app` that will be included in logs
- * @param options Options for Pino
+ * @param optionsOrStream Options for Pino or a writable stream where the logs will be written. It can also receive some log-line metadata, if the
+ * relative protocol is enabled. Default: process.stdou
  */
 export function initializeLogger(
+  fields?: Bindings,
+  optionsOrStream?: LoggerOptions | DestinationStream
+): void;
+
+/**
+ * Initialize the Skog logger with Pino
+ *
+ * @param fields An object with fields like `app` that will be included in logs
+ * @param options Options for Pino
+ * @param stream a writable stream where the logs will be written. It can also receive some log-line metadata, if the
+ * relative protocol is enabled. Default: process.stdou
+ */
+export function initializeLogger(
+  fields: Bindings,
+  options: LoggerOptions,
+  stream: DestinationStream
+): void;
+export function initializeLogger(
   fields: Bindings = {},
-  options?: LoggerOptions | DestinationStream
+  options: LoggerOptions | DestinationStream = {},
+  stream?: DestinationStream
 ): void {
-  const pinoLogger = pino(options).child(fields);
+  let pinoLogger;
+
+  if (!stream) {
+    pinoLogger = pino(options).child(fields);
+  } else {
+    pinoLogger = pino(options as LoggerOptions, stream).child(fields);
+  }
   setCurrentLogger(pinoLogger);
 }
 
