@@ -3,7 +3,7 @@ import { createNamespace } from "cls-hooked";
 import cuid from "cuid";
 // eslint-disable-next-line import/no-unresolved
 import { NextFunction, Request } from "express";
-import pino, { LoggerOptions, LogFn, Bindings } from "pino";
+import pino, { LoggerOptions, LogFn, Bindings, DestinationStream } from "pino";
 
 /** A logger with 6 levels */
 interface Logger {
@@ -122,7 +122,7 @@ const skog: Skog = {
  */
 export function initializeLogger(
   fields: Bindings = {},
-  options: LoggerOptions = {}
+  options?: LoggerOptions | DestinationStream
 ): void {
   const pinoLogger = pino(options).child(fields);
   setCurrentLogger(pinoLogger);
