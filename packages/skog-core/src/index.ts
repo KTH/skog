@@ -45,6 +45,19 @@ export function skogify<Args extends any[], Ret extends unknown>(
 }
 
 /**
+ * Runs a given function `fn` with a new context that includes given `fields`
+ *
+ * Returns whatever is returned by the function.
+ */
+export function runWithContext<T>(fields: Record<string, any>, fn: () => T): T {
+  return skogify(() => {
+    setFields(fields);
+
+    return fn();
+  })();
+}
+
+/**
  * Express middleware that adds a field called "req_id" into the current
  * context
  */

@@ -1,6 +1,6 @@
 # Skog core
 
-Abstractions on top of [native Node.js Asynchronous context tracking](https://nodejs.org/api/async_context.html) to help you create loggers with context.
+Functions to help you create loggers with context.
 
 ---
 
