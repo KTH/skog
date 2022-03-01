@@ -1,8 +1,9 @@
 <div align="center">
-<img src="media/logo.png" width="360">
+<img src="media/skog-logo.png" width="384">
 <p>
 Add <em>context</em> to your Node.js logs
 </p>
+<em>Forest photo by <a href="https://unsplash.com/photos/d6kSvT2xZQo">Gustav Gullstrand</a> on <a href="https://unsplash.com">Unsplash</a></em>
 </div>
 
 ## Structure
