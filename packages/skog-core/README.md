@@ -26,7 +26,7 @@ app.listen(3000, () => {
 });
 ```
 
-Full example with comments (./examples/00-express.mjs)[here].
+Full example with comments [here](./examples/00-express.mjs).
 
 ## References
 
