@@ -4,7 +4,7 @@
  * Read more about AsyncLocalStorage: https://nodejs.org/api/async_context.html
  */
 import { AsyncLocalStorage } from "async_hooks";
-import cuid from "cuid";
+import { nanoid as uid } from "nanoid";
 
 type Fields = Record<string, any> | null;
 
@@ -64,5 +64,5 @@ export function runWithContext<T>(fields: Record<string, any>, fn: () => T): T {
  * context
  */
 export function skogMiddleware(req: unknown, res: unknown, next: () => void) {
-  runWithContext({ ...getFields(), req_id: cuid() }, next);
+  runWithContext({ ...getFields(), req_id: uid() }, next);
 }
