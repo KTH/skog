@@ -10,9 +10,6 @@
     "test:lint": "eslint src",
     "build": "npm test"
   },
-  "files": [
-    "src"
-  ],
   "keywords": [
     "logging",
     "bunyan",
