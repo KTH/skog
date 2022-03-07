@@ -36,7 +36,7 @@ export function setFields(newFields: Record<string, any>) {
  *
  * The returned function will have the same signature as the argument
  */
-export function skogify<Args extends any[], Ret extends unknown>(
+export function addSkogContext<Args extends any[], Ret extends unknown>(
   fn: (...args: Args) => Ret
 ): (...args: Args) => Ret {
   return (...args: Args) => {
@@ -51,8 +51,11 @@ export function skogify<Args extends any[], Ret extends unknown>(
  *
  * Returns whatever is returned by the function.
  */
-export function runWithContext<T>(fields: Record<string, any>, fn: () => T): T {
-  return skogify(() => {
+export function runWithSkogContext<T>(
+  fields: Record<string, any>,
+  fn: () => T
+): T {
+  return addSkogContext(() => {
     setFields(fields);
 
     return fn();
@@ -64,5 +67,5 @@ export function runWithContext<T>(fields: Record<string, any>, fn: () => T): T {
  * context
  */
 export function skogMiddleware(req: unknown, res: unknown, next: () => void) {
-  runWithContext({ ...getFields(), req_id: uid() }, next);
+  runWithSkogContext({ ...getFields(), req_id: uid() }, next);
 }
