@@ -1,5 +1,16 @@
 import { getFields } from "./asyncContext";
 
+export const LEVEL_NUMBERS = {
+  fatal: 60,
+  error: 50,
+  warn: 40,
+  info: 30,
+  debug: 20,
+  trace: 10,
+};
+
+export type Levels = keyof typeof LEVEL_NUMBERS;
+
 export interface LogFunction {
   (arg1: Error | Record<string, any>, message: string): void;
 
@@ -15,11 +26,7 @@ export interface Logger {
   trace: LogFunction;
 }
 
-function print(
-  level: "FATAL" | "ERROR" | "WARN" | "INFO" | "DEBUG" | "TRACE",
-  arg1: string | Error | any,
-  arg2?: unknown
-) {
+function print(level: Levels, arg1: string | Error | any, arg2?: unknown) {
   const fields = getFields();
 
   if (fields) {
@@ -38,10 +45,10 @@ function print(
 }
 
 export const consoleLog: Logger = {
-  fatal: (arg1, arg2?) => print("FATAL", arg1, arg2),
-  error: (arg1, arg2?) => print("ERROR", arg1, arg2),
-  warn: (arg1, arg2?) => print("WARN", arg1, arg2),
-  info: (arg1, arg2?) => print("INFO", arg1, arg2),
-  debug: (arg1, arg2?) => print("DEBUG", arg1, arg2),
-  trace: (arg1, arg2?) => print("TRACE", arg1, arg2),
+  fatal: (arg1, arg2?) => print("fatal", arg1, arg2),
+  error: (arg1, arg2?) => print("error", arg1, arg2),
+  warn: (arg1, arg2?) => print("warn", arg1, arg2),
+  info: (arg1, arg2?) => print("info", arg1, arg2),
+  debug: (arg1, arg2?) => print("debug", arg1, arg2),
+  trace: (arg1, arg2?) => print("trace", arg1, arg2),
 };
