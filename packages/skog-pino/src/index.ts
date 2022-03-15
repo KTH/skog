@@ -59,7 +59,7 @@ function print(level: Levels, arg1: string | Error | any, arg2: unknown) {
   }
 }
 
-export { setFields } from "skog-core";
+export { setFields, skogMiddleware } from "skog-core";
 export const log: SkogLogger = {
   trace: (arg1, arg2?) => print("trace", arg1, arg2),
   debug: (arg1, arg2?) => print("debug", arg1, arg2),
