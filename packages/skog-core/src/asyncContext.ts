@@ -14,14 +14,14 @@ let rootFields: Fields = null;
 /**
  * Get the fields in the current async context.
  */
-export function getFields() {
-  return logDataStorage.getStore()?.fields ?? rootFields;
+export function getFields<T = Fields>() {
+  return (logDataStorage.getStore()?.fields ?? rootFields) as T;
 }
 
 /**
  * Replace fields in the current async context.
  */
-export function setFields(newFields: Record<string, any>) {
+export function setFields<T = Fields>(newFields: T) {
   const store = logDataStorage.getStore();
 
   if (store) {
@@ -51,10 +51,7 @@ export function addSkogContext<Args extends any[], Ret extends unknown>(
  *
  * Returns whatever is returned by the function.
  */
-export function runWithSkogContext<T>(
-  fields: Record<string, any>,
-  fn: () => T
-): T {
+export function runWithSkogContext<T>(fields: Fields, fn: () => T): T {
   return addSkogContext(() => {
     setFields(fields);
 
