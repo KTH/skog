@@ -1,6 +1,6 @@
-import { Logger as SkogLogger, getFields, Levels, setFields } from "skog-core";
+import { Logger as SkogLogger, getFields, Levels } from "skog-core";
 import pino, {
-  LoggerOptions,
+  LoggerOptions as PinoLoggerOptions,
   DestinationStream,
   Logger as PinoLogger,
 } from "pino";
@@ -8,21 +8,20 @@ import pino, {
 let instance: PinoLogger;
 
 export function initializeLogger(
-  optionsOrStream?: LoggerOptions | DestinationStream
+  optionsOrStream?: PinoLoggerOptions | DestinationStream
 ): void;
 export function initializeLogger(
-  options: LoggerOptions,
+  options: PinoLoggerOptions,
   stream: DestinationStream
 ): void;
 export function initializeLogger(
-  optionsOrStream?: LoggerOptions | DestinationStream,
+  optionsOrStream?: PinoLoggerOptions | DestinationStream,
   stream?: DestinationStream
 ) {
   if (!stream) {
-    // optionsOrStream is "LoggerOptions"
     instance = pino(optionsOrStream);
   } else {
-    instance = pino(optionsOrStream as LoggerOptions, stream);
+    instance = pino(optionsOrStream as PinoLoggerOptions, stream);
   }
 }
 
@@ -36,7 +35,6 @@ function print(level: Levels, arg1: string | Error | any, arg2: unknown) {
   const loggerFunction = instance[level].bind(instance);
 
   if (fields) {
-    //...
     if (typeof arg1 === "string") {
       loggerFunction(fields, arg1);
     } else if (typeof arg2 === "string") {
