@@ -2,7 +2,7 @@
 /**
  * In this example we are showing the main functionality of Skog
  */
-import { skogify, getFields, setFields } from "../dist/index.js";
+import { addSkogContext, getFields, setFields } from "../dist/index.js";
 
 // Implement sleep for convinience:
 function sleep(t) {
@@ -39,7 +39,7 @@ async function _handle() {
 
 // To be able to use Async Contexts, functions that call "getFields" and
 // "setFields" must be "skogified". It can be done globally
-const handle = skogify(_handle);
+const handle = addSkogContext(_handle);
 
 // Optional. We initialize the id:
 setFields({ id: 0 });
