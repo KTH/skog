@@ -6,7 +6,6 @@ import log, {
 import express from "express";
 import { setTimeout } from "timers/promises";
 import http from "http";
-import { format } from "util";
 
 // Define a HTTP server and client
 const app = express();
@@ -22,7 +21,7 @@ app.get("/", async (req, res) => {
 
 async function sendRequest(name: string) {
   return new Promise<void>((resolve) => {
-    http.get(`http://localhost:3000?name=${name}`, (res) => {
+    http.get(`http://localhost:3001?name=${name}`, (res) => {
       resolve();
     });
   });
@@ -30,23 +29,26 @@ async function sendRequest(name: string) {
 
 describe("skogMiddleware", () => {
   let server: http.Server;
+  let result: string[] = [];
 
   beforeAll(() => {
-    server = app.listen(3000);
+    server = app.listen(3001);
+    jest.useFakeTimers("modern").setSystemTime(new Date(1234));
   });
 
   beforeEach(() => {
-    initializeLogger();
+    result = [];
+    initializeLogger(
+      {},
+      {
+        write(msg) {
+          result.push(msg);
+        },
+      }
+    );
   });
 
   test("Ensure that `console.log` is called 10 times with the same arguments", async () => {
-    const result: string[] = [];
-
-    // Mock console.log to send the logs to the "result" array
-    jest.spyOn(console, "log").mockImplementation((...args) => {
-      result.push(format(...args));
-    });
-
     const names = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J"];
     await Promise.all(names.map((name) => sendRequest(name)));
 
@@ -61,15 +63,25 @@ describe("skogMiddleware", () => {
 });
 
 describe("log", () => {
+  let result: string[] = [];
+
+  beforeAll(() => {
+    jest.useFakeTimers("modern").setSystemTime(new Date(1234));
+  });
+
+  beforeEach(() => {
+    result = [];
+    initializeLogger(
+      { base: undefined },
+      {
+        write(msg) {
+          result.push(msg);
+        },
+      }
+    );
+  });
+
   test("Ensure log methods renders Error objects correctly", () => {
-    // Mock console.log to send the logs to the "result" array
-    const result: string[] = [];
-
-    // Mock console.log to send the logs to the "result" array
-    jest.spyOn(console, "log").mockImplementation((...args) => {
-      result.push(format(...args));
-    });
-
     try {
       throw new Error("Example error");
     } catch (err) {
@@ -85,14 +97,6 @@ describe("log", () => {
   });
 
   test("Ensure log methods renders Error objects within a context", () => {
-    // Mock console.log to send the logs to the "result" array
-    const result: string[] = [];
-
-    // Mock console.log to send the logs to the "result" array
-    jest.spyOn(console, "log").mockImplementation((...args) => {
-      result.push(format(...args));
-    });
-
     runWithSkogContext({ id: 1 }, () => {
       try {
         throw new Error("Example error");

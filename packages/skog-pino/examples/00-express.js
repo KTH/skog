@@ -6,9 +6,9 @@
  * Run this script directly to perform several parallel requests to a Express
  * server
  */
-import express from "express";
-import http from "http";
-import { skogMiddleware, log, initializeLogger } from "../dist/index.js";
+const http = require("http");
+const express = require("express");
+const { default: log, skogMiddleware, initializeLogger } = require("../dist");
 
 initializeLogger();
 
@@ -46,12 +46,30 @@ async function sendRequest(name) {
 }
 
 // Let's run our program!!
-const server = app.listen(3000, () => {
-  log.info("Starting server");
-  greet("world");
-});
+async function start() {
+  const server = app.listen(3000, () => {
+    log.info("Starting server");
+    greet("world");
+  });
 
-// We perform a couple of parallel requests
-const names = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M"];
-await Promise.all(names.map((name) => sendRequest(name)));
-server.close();
+  // We perform a couple of parallel requests
+  const names = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "G",
+    "H",
+    "I",
+    "J",
+    "K",
+    "L",
+    "M",
+  ];
+  await Promise.all(names.map((name) => sendRequest(name)));
+  server.close();
+}
+
+start();

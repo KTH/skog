@@ -25,36 +25,44 @@ export function initializeLogger(
   }
 }
 
+function mergeObject(obj: Error | object | string) {
+  const fields = getFields();
+
+  if (obj instanceof Error) {
+    return {
+      msg: "",
+      err: obj,
+      ...fields,
+    };
+  } else if (typeof obj === "string") {
+    return {
+      msg: obj,
+      ...fields,
+    };
+  } else {
+    return {
+      msg: "",
+      ...fields,
+      ...obj,
+    };
+  }
+}
+
 function print(level: Levels, arg1: string | Error | any, arg2: unknown) {
   if (!instance) {
     throw new Error(
       "It is not possible to log stuff before instantiating. Use `initializeLogger` first"
     );
   }
-  const fields = getFields();
-  const loggerFunction = instance[level].bind(instance);
 
-  if (fields) {
-    if (typeof arg1 === "string") {
-      loggerFunction(fields, arg1);
-    } else if (typeof arg2 === "string") {
-      if (arg1 instanceof Error) {
-        loggerFunction({ ...fields, err: arg1 }, arg2);
-      } else {
-        loggerFunction({ ...fields, ...arg1 }, arg2);
-      }
-    }
-  } else {
-    if (typeof arg1 === "string") {
-      loggerFunction(arg1);
-    } else if (typeof arg2 === "string") {
-      if (arg1 instanceof Error) {
-        loggerFunction({ err: arg1 }, arg2);
-      } else {
-        loggerFunction(arg1, arg2);
-      }
-    }
+  const loggerFunction = instance[level].bind(instance);
+  const obj = mergeObject(arg1);
+
+  if (typeof arg2 === "string") {
+    obj.msg = arg2;
   }
+
+  loggerFunction(obj);
 }
 
 export { SkogLogger as Logger };
