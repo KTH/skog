@@ -1,0 +1,21 @@
+{
+  "name": "skog",
+  "version": "2.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "typescript": "^4.6.2"
+  },
+  "dependencies": {
+    "pino": "^7.9.1",
+    "skog-core": "^0.0.0",
+    "skog-pino": "^0.0.0"
+  }
+}

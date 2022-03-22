@@ -1,5 +1,3 @@
-import { log, Logger, initializeLogger } from "./log";
-
 export {
   LEVEL_NUMBERS,
   Levels,
@@ -10,5 +8,9 @@ export {
   runWithSkogContext,
   skogMiddleware,
 } from "skog-core";
-export { initializeLogger, Logger };
-export default log;
+export {
+  initializeLogger,
+  Logger,
+  PinoLoggerOptions,
+  log as default,
+} from "./log";
