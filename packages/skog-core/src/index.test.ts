@@ -3,6 +3,7 @@ import express from "express";
 import { setTimeout } from "timers/promises";
 import http from "http";
 import { format } from "util";
+import { runWithSkogContext } from "./asyncContext";
 
 // Define a HTTP server and client
 const app = express();
@@ -49,5 +50,55 @@ describe("skogMiddleware", () => {
 
   afterAll(() => {
     server.close();
+  });
+});
+
+describe("log", () => {
+  test("Ensure log methods renders Error objects correctly", () => {
+    // Mock console.log to send the logs to the "result" array
+    const result: string[] = [];
+
+    // Mock console.log to send the logs to the "result" array
+    jest.spyOn(console, "log").mockImplementation((...args) => {
+      result.push(format(...args));
+    });
+
+    try {
+      throw new Error("Example error");
+    } catch (err) {
+      if (err instanceof Error) {
+        log.info(err);
+        log.info(err, "Custom message");
+      }
+    }
+
+    expect(result.length).toBe(2);
+    expect(result[0]).toMatchSnapshot();
+    expect(result[1]).toMatchSnapshot();
+  });
+
+  test("Ensure log methods renders Error objects within a context", () => {
+    // Mock console.log to send the logs to the "result" array
+    const result: string[] = [];
+
+    // Mock console.log to send the logs to the "result" array
+    jest.spyOn(console, "log").mockImplementation((...args) => {
+      result.push(format(...args));
+    });
+
+    runWithSkogContext({ id: 1 }, () => {
+      try {
+        throw new Error("Example error");
+      } catch (err) {
+        if (err instanceof Error) {
+          log.info(err);
+          log.info(err, "Custom message");
+        }
+      }
+    });
+
+    expect(result.length).toBe(2);
+    expect(result[0]).toMatchSnapshot();
+    expect(result[1]).toMatchSnapshot();
   });
 });

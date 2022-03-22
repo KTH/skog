@@ -12,7 +12,7 @@ export const LEVEL_NUMBERS = {
 export type Levels = keyof typeof LEVEL_NUMBERS;
 
 export interface LogFunction {
-  (arg1: Error | Record<string, any>, message: string): void;
+  (arg1: Error | Record<string, any>, message?: string): void;
 
   (message: string): void;
 }
@@ -26,21 +26,33 @@ export interface Logger {
   trace: LogFunction;
 }
 
+function mergeObject(obj: Error | object) {
+  const fields = getFields();
+
+  if (!fields) {
+    return obj;
+  } else if (obj instanceof Error) {
+    return {
+      ...fields,
+      err: obj,
+    };
+  } else {
+    return { ...fields, ...obj };
+  }
+}
+
 function print(level: Levels, arg1: string | Error | any, arg2?: unknown) {
   const fields = getFields();
 
-  if (fields) {
-    if (typeof arg1 === "string") {
-      console.log("[%s] %s %o", level, arg1, fields);
-    } else if (typeof arg2 === "string") {
-      console.log("[%s] %s %o", level, arg2, { ...fields, ...arg1 });
-    }
-  } else {
-    if (typeof arg1 === "string") {
-      console.log("[%s] %s", level, arg1);
-    } else if (typeof arg2 === "string") {
-      console.log("[%s] %s %o", level, arg2, arg1);
-    }
+  if (!fields && typeof arg1 === "string" && !arg2) {
+    // Print "level, string" when there is only a string
+    console.log("[%s] %s", level, arg1);
+  } else if (arg1 && !arg2) {
+    // Print "level, object" when there is only an object
+    console.log("[%s] %o", level, mergeObject(arg1));
+  } else if (arg1 && typeof arg2 === "string") {
+    // Print "level, string, object" when there is object and string
+    console.log("[%s] %s %o", level, arg2, mergeObject(arg1));
   }
 }
 
