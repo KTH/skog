@@ -2,7 +2,7 @@
 
 exports[`log Ensure log methods renders Error objects correctly 1`] = `
 "[info] Error: Example error
-    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:67:13)
+    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:67:13)
     at Promise.then.completed (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:391:28)
     at new Promise (<anonymous>)
     at callAsyncCircusFn (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:316:10)
@@ -13,7 +13,7 @@ exports[`log Ensure log methods renders Error objects correctly 1`] = `
     at _runTestsForDescribeBlock (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/run.js:60:9)
     at run (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/run.js:25:3) {
   [stack]: 'Error: Example error\\\\n' +
-    '    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:67:13)\\\\n' +
+    '    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:67:13)\\\\n' +
     '    at Promise.then.completed (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:391:28)\\\\n' +
     '    at new Promise (<anonymous>)\\\\n' +
     '    at callAsyncCircusFn (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:316:10)\\\\n' +
@@ -29,7 +29,7 @@ exports[`log Ensure log methods renders Error objects correctly 1`] = `
 
 exports[`log Ensure log methods renders Error objects correctly 2`] = `
 "[info] Custom message Error: Example error
-    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:67:13)
+    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:67:13)
     at Promise.then.completed (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:391:28)
     at new Promise (<anonymous>)
     at callAsyncCircusFn (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:316:10)
@@ -40,7 +40,7 @@ exports[`log Ensure log methods renders Error objects correctly 2`] = `
     at _runTestsForDescribeBlock (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/run.js:60:9)
     at run (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/run.js:25:3) {
   [stack]: 'Error: Example error\\\\n' +
-    '    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:67:13)\\\\n' +
+    '    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:67:13)\\\\n' +
     '    at Promise.then.completed (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:391:28)\\\\n' +
     '    at new Promise (<anonymous>)\\\\n' +
     '    at callAsyncCircusFn (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:316:10)\\\\n' +
@@ -58,24 +58,24 @@ exports[`log Ensure log methods renders Error objects within a context 1`] = `
 "[info] {
   id: 1,
   err: Error: Example error
-      at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:91:15
+      at /Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:91:15
       at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:58:12
       at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:45:64
       at AsyncLocalStorage.run (node:async_hooks:320:14)
       at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:45:27
       at runWithSkogContext (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:59:5)
-      at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:89:23)
+      at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:89:23)
       at Promise.then.completed (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:391:28)
       at new Promise (<anonymous>)
       at callAsyncCircusFn (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:316:10) {
     [stack]: 'Error: Example error\\\\n' +
-      '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:91:15\\\\n' +
+      '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:91:15\\\\n' +
       '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:58:12\\\\n' +
       '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:45:64\\\\n' +
       '    at AsyncLocalStorage.run (node:async_hooks:320:14)\\\\n' +
       '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:45:27\\\\n' +
       '    at runWithSkogContext (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:59:5)\\\\n' +
-      '    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:89:23)\\\\n' +
+      '    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:89:23)\\\\n' +
       '    at Promise.then.completed (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:391:28)\\\\n' +
       '    at new Promise (<anonymous>)\\\\n' +
       '    at callAsyncCircusFn (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:316:10)',
@@ -88,24 +88,24 @@ exports[`log Ensure log methods renders Error objects within a context 2`] = `
 "[info] Custom message {
   id: 1,
   err: Error: Example error
-      at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:91:15
+      at /Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:91:15
       at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:58:12
       at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:45:64
       at AsyncLocalStorage.run (node:async_hooks:320:14)
       at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:45:27
       at runWithSkogContext (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:59:5)
-      at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:89:23)
+      at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:89:23)
       at Promise.then.completed (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:391:28)
       at new Promise (<anonymous>)
       at callAsyncCircusFn (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:316:10) {
     [stack]: 'Error: Example error\\\\n' +
-      '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:91:15\\\\n' +
+      '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:91:15\\\\n' +
       '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:58:12\\\\n' +
       '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:45:64\\\\n' +
       '    at AsyncLocalStorage.run (node:async_hooks:320:14)\\\\n' +
       '    at /Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:45:27\\\\n' +
       '    at runWithSkogContext (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/asyncContext.ts:59:5)\\\\n' +
-      '    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/src/index.test.ts:89:23)\\\\n' +
+      '    at Object.<anonymous> (/Volumes/Data/kth/e-larande/skog/packages/skog-core/__tests__/skogMiddleware.test.ts:89:23)\\\\n' +
       '    at Promise.then.completed (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:391:28)\\\\n' +
       '    at new Promise (<anonymous>)\\\\n' +
       '    at callAsyncCircusFn (/Volumes/Data/kth/e-larande/skog/packages/skog-core/node_modules/jest-circus/build/utils.js:316:10)',

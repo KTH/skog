@@ -1,9 +1,9 @@
-import log, { skogMiddleware } from "./index";
+import log, { skogMiddleware } from "../src/index";
 import express from "express";
 import { setTimeout } from "timers/promises";
 import http from "http";
 import { format } from "util";
-import { runWithSkogContext } from "./asyncContext";
+import { runWithSkogContext } from "../src/asyncContext";
 
 // Define a HTTP server and client
 const app = express();

@@ -1,4 +1,4 @@
-import { runWithSkogContext, getFields, setFields } from "./asyncContext";
+import { runWithSkogContext, getFields, setFields } from "../src/asyncContext";
 import { setTimeout } from "timers/promises";
 
 // Helper functions to emulate a console in a very simple way
