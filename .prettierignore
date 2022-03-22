@@ -2,3 +2,5 @@ build-information.js
 
 ## From here on, everything is a copy from .gitignore
 node_modules
+*.DS_Store
+dist
