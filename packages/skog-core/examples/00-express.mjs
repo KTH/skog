@@ -28,9 +28,9 @@ const app = express();
 app.use(skogMiddleware);
 app.get("/", async (req, res) => {
   await sleep(Math.random() * 10);
-  log.info("Received request");
+  log.info(`${req.query.name} - Received request`);
   await sleep(Math.random() * 10);
-  greet(req.query.name);
+  greet(`${req.query.name} - Hello`);
   res.send(req.query.name);
 });
 
