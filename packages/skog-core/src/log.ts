@@ -43,15 +43,17 @@ function mergeObject(obj: Error | object) {
 
 function print(level: Levels, arg1: string | Error | any, arg2?: unknown) {
   const fields = getFields();
+  const a = typeof arg1;
 
   if (!fields && typeof arg1 === "string" && !arg2) {
     // Print "level, string" when there is only a string
     console.log("[%s] %s", level, arg1);
-  } else if (arg1 && !arg2) {
+  } else if (typeof arg1 === "object" && !arg2) {
     // Print "level, object" when there is only an object
     console.log("[%s] %o", level, mergeObject(arg1));
+  } else if (typeof arg1 === "string" && fields) {
+    console.log("[%s] %s %o", level, arg1, fields);
   } else if (arg1 && typeof arg2 === "string") {
-    // Print "level, string, object" when there is object and string
     console.log("[%s] %s %o", level, arg2, mergeObject(arg1));
   }
 }
