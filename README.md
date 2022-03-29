@@ -6,20 +6,42 @@ Add <em>context</em> to your Node.js logs
 <em>Forest photo by <a href="https://unsplash.com/photos/d6kSvT2xZQo">Gustav Gullstrand</a> on <a href="https://unsplash.com">Unsplash</a></em>
 </div>
 
-## Structure
+# Getting started
 
-[ UNDER DEVELOPMENT ]
+Skog lets you add context to your logs without hassle. For example, if you have a Express server and want to add a field called `req_id` to every log so you can group logs by request, use the `skogMiddleware`
 
-Skog is all about _async context and logging stuff_: it uses **Async Context** to store what is going to be logged and then different libraries to **log stuff**. This repo will contain at least three packages:
+```ts
+import { skogMiddleware } from "skog";
+import express from "express";
 
-- [**skog-core**](./packages/skog-core/). A "Logger" interface (without implementation) and functions for handling Async Context. Use this if you are making integrations with different logging libraries or if you want to use
+const app = express();
+app.use(skogMiddleware);
+```
 
-  This package would be: as small as possible, wihthout almost any dependencies. It will expose as many low-level functions as possible to maximize customization.
+Then, you can use skog anywhere to just log stuff:
 
-- **skog-pino**. Pino logging library with Skog.
+```ts
+import log from "skog";
 
-- **skog**. Opinionated no-config logging library. It contains decisions like "when in test, use `console`; in prod, use `pino`", etc.
+export function getUser(id) {
+  // ...
+  log.info(`Getting user with ID ${id}`);
+}
+```
 
-## Getting started
+# How it works
 
-[ UNDER DEVELOPMENT ]
+[ TODO ]
+
+Skog uses **Pino.js** for sending structured logs to the console
+
+# Recipes
+
+Skog offers you a simple interface to be able to make your own integrations easily, for example:
+
+- **Create a middleware for different web frameworks**.
+- **Add different attributes to the logs**. For example, you might want to add _session ID_ or _user ID_
+
+# API
+
+[under development]
