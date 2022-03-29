@@ -2,12 +2,16 @@
   "name": "skog",
   "version": "3.0.0-alpha.1",
   "description": "",
-  "main": "./dist/index.js",
-  "types": "./dist/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "watch": "tsc -w",
+    "prepublish": "npm run build"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [],
   "author": "",
   "license": "ISC",
