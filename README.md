@@ -28,6 +28,11 @@ app.listen(3000, () => {
 });
 ```
 
+# Continue reading
+
+- [Async Context in Node.js](./docs/01-nodejs-context.md). Explains the technology behind Skog.
+- [How Async COntext is used in Skog](./docs/02-skog-context.md). Explains how do we use Async Contexts in Skog and how can you build your own integrations
+
 # In depth explanation
 
 # Recipes
