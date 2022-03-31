@@ -3,7 +3,7 @@
 In this page you will learn more on how Skog uses Async Context and how the functions `runWithSkogContext` and `getFields` can help you to make integrations using its power.
 
 - Both functions handle **Node.js Async Context**. If you don't know what it is, you can read about it [here](./01-nodejs-context.md).
-- This page is not the API reference of the functions but an explanation of them.
+- This page is not the API reference of the functions but an explanation of them. [ todo: create such page and add a link to it here ]
 
 ---
 

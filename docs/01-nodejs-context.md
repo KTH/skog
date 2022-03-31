@@ -106,4 +106,4 @@ app.get("/", () => {
 
 ---
 
-Continue reading: [Context in Skog](./02-skog-context.md)
+Now that you know what are Async Contexts in Node.js, you can read on [how do we use them in Skog](./02-skog-context.md)
