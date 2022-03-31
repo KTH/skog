@@ -28,7 +28,7 @@ This is **entirely fine in 99% of the applications** and, like Contexts in React
 
 Contexts (both in React and Node.js) is usually a tool that is more useful when developing a library or a framework where you have **partial** access to your data.
 
-In the example above, imagine that you are building a library with the functions `a` and `c`, but the function `b` is provided by the user. A user of your library will do something like this:
+In the example above, imagine that you are building a library with the functions `a` and `c`, but the function `b` is provided by the user. In this case, such function will be provided as a callback.
 
 ```ts
 import { a, c } from "a-library";
@@ -38,7 +38,18 @@ a(function b() {
 });
 ```
 
-If you are developing the `a-library` in the example and you need to pass a "message" from `a` to `c`, how would you do it?
+Now, let's imagine that you are building the library (and the functions `a` and `c`) and you need to pass some value from `a` to `c`, maybe a value generated everytime the user calls `a`
+
+```ts
+export function a(callback) {
+  // Let's suppose that we have a ID generator function
+  const message = generateId();
+}
+
+export function c() {
+  // How do I receive the "message" from `a`?
+}
+```
 
 One easy way would be using a global variable:
 
@@ -57,7 +68,7 @@ export function c() {
 }
 ```
 
-However... What happens if you cannot guarantee in which order they run?
+But... In the following example, can you guarantee that the `message` when calling `c` is correct?
 
 ```ts
 import { a, c } from "a-library";
