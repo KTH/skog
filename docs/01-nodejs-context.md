@@ -95,4 +95,4 @@ app.get("/", () => {
 
 ---
 
-Now that you know how async contexts work in Node.js, we can present you the two low-level functions in Skog that you can use to write your own middleware. Those functions are:
+Continue reading: [Context in Skog](./02-skog-context.md)
