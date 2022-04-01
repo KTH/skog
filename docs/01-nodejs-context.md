@@ -28,7 +28,7 @@ This is **entirely fine in 99% of the applications** and, like Contexts in React
 
 Contexts (both in React and Node.js) is usually a tool that is more useful when developing a library or a framework where you have **partial** access to your data.
 
-In the example above, imagine that you are building a library with the functions `a` and `c`, but the function `b` is provided by the user. In this case, such function will be provided as a callback.
+In the example above, imagine that you are building a library with the functions `a` and `c`, but the function `b` is provided by the user. In this case, the user will provide the function as an argument:
 
 ```ts
 import { a, c } from "a-library";
@@ -41,7 +41,7 @@ a(function b() {
 Now, let's imagine that you are building the library (and the functions `a` and `c`) and you need to pass some value from `a` to `c`, maybe a value generated everytime the user calls `a`
 
 ```ts
-export function a(callback) {
+export function a(fn) {
   // Let's suppose that we have a ID generator function
   const message = generateId();
 }
@@ -55,11 +55,11 @@ One easy way would be using a global variable:
 
 ```ts
 let message = "";
-export function a(callback) {
+export function a(fn) {
   // The "generate ID" will generate unique IDs everytime is called
   message = generateId();
 
-  callback();
+  fn();
 }
 
 export function c() {
