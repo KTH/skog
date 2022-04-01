@@ -49,7 +49,7 @@ function skogMiddleware(req, res, next) {
 }
 ```
 
-Now, we need to open a context that will live during the entire request handling. The `next` function refers to the request handler and any other middleware in between, so that's the function we need to pass to `runWithSkogContext`:
+Now, we need to create a context that will live during the entire request handling. The `next` function refers to the request handler and any other middleware in between, so that's the function we need to pass to `runWithSkogContext`:
 
 ```ts
 function skogMiddleware(req, res, next) {
@@ -59,7 +59,7 @@ function skogMiddleware(req, res, next) {
 }
 ```
 
-Lastly, sometimes there is already a context opened when calling this middleware (e.g., there is another middleware that opnens such context). To support it, we call `getFields` and add the returned object to the fields:
+Lastly, sometimes there is already a context created when calling this middleware (e.g., there is another middleware that creates such context). To support it, we call `getFields` and add the returned object to the fields:
 
 ```ts
 function skogMiddleware(req, res, next) {
