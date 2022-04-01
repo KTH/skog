@@ -9,9 +9,9 @@ In this page you will learn more on how Skog uses Async Context and how the func
 
 - The function **runWithSkogContext** receives two arguments: `fields` (an object) and `fn` (a zero-argument function).
 
-  It will create a new context with `fields` and **execute** `fn`. The context will be alive during the execution of the `fn`.
+  It will create a new context with `fields` and **execute** `fn` inmediately. The context will be alive during the execution of `fn`.
 
-  `runWithSkogContext` will return the same value as the value returned by `fn`. This is specially useful when you are passing async functions as callback. In that case `runWithContext` will return a `Promise` that can be awaited:
+  `runWithSkogContext` will return the same value as the value returned by `fn`. This is specially useful when passing an async function. In that case `runWithContext` will return a `Promise` that can be awaited:
 
   ```ts
   // `p` is the promise returned by the `f` function
@@ -49,7 +49,7 @@ function skogMiddleware(req, res, next) {
 }
 ```
 
-Now, we need to open a context that will live during the entire request handling. The `next` function refers to the request handler and any other middleware in between, so that's what we need as callback for `runWithSkogContext`:
+Now, we need to open a context that will live during the entire request handling. The `next` function refers to the request handler and any other middleware in between, so that's the function we need to pass to `runWithSkogContext`:
 
 ```ts
 function skogMiddleware(req, res, next) {
@@ -115,7 +115,7 @@ function middleware(req: NextRequest, ev: NextFetchEvent) {
 
 Finally, the middleware should return a response. In our case we are not manipulating the response, so we just need to return the value returned by the next middleware chain, so the value returned by `NextResponse.next`.
 
-Luckily, `runWithSkogContext` will return the value returned by its callback. In our case: `runWithSkogContext` returns what is returned by `NextResponse.next`.
+Luckily, `runWithSkogContext` will return the value returned by the function passed. In our case: `runWithSkogContext` returns what is returned by `NextResponse.next`.
 
 ```ts
 import { NextResponse } from "next/server";
