@@ -15,7 +15,7 @@ In this page you will learn more on how Skog uses Async Context and how the func
 
 - The function **getFields** returns the `fields` in the current execution context. Will return null if no fields are set or if called outside of an execution context.
 
-  All logging functions call `getFields` before printing a message.
+  All logging functions (`log.info`, `log.error`, etc.) call `getFields` internally and will add the fields to the logging object.
 
 In this page we are going to show how to create two different middleware:
 
