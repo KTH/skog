@@ -1,4 +1,4 @@
-# How do Node.js Contexts works
+# How do Node.js Contexts work
 
 Skog uses **Async Context Tracking** under the hood, a feature introduced in Node.js 14. Unfortunately it is not well documented so we will try to explain it here.
 

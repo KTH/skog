@@ -7,7 +7,7 @@ In this page you will learn more on how Skog uses Async Context and how the func
 
 ---
 
-- The function **runWithContext** receives two arguments: `fields` (an object) and `callback` (a zero-argument function).
+- The function **runWithSkogContext** receives two arguments: `fields` (an object) and `callback` (a zero-argument function).
 
   It will create a new context with `fields`. The context will be alive during the execution of the `callback`.
 
