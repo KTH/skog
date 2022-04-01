@@ -59,6 +59,19 @@ function skogMiddleware(req, res, next) {
 }
 ```
 
+Lastly, sometimes there is already a context opened when calling this middleware (e.g., there is another middleware that opnens such context). To support it, we call `getFields` and add the returned object to the fields:
+
+```ts
+function skogMiddleware(req, res, next) {
+  const fields = {
+    ...getFields(),
+    req_id: nanoid(),
+  };
+
+  runWithSkogContext(fields, next);
+}
+```
+
 Done!
 
 ## A middleware for Next.js
@@ -76,6 +89,7 @@ First, let's define the fields we want. In our case we want the **user session I
 ```ts
 function middleware(req: NextRequest, ev: NextFetchEvent) {
   const fields = {
+    ...getFields(),
     // For security reasons, we are not going to log the entire session ID
     // only the last 6 characters which should be good enough to search in the
     // logs
@@ -91,6 +105,7 @@ import { NextResponse } from "next/server";
 
 function middleware(req: NextRequest, ev: NextFetchEvent) {
   const fields = {
+    ...getFields(),
     session_id: req.cookies["session_id"]?.slice(-6),
   };
 
@@ -107,6 +122,7 @@ import { NextResponse } from "next/server";
 
 function middleware(req: NextRequest, ev: NextFetchEvent) {
   const fields = {
+    ...getFields(),
     session_id: req.cookies["session_id"]?.slice(-6),
   };
 
