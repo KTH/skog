@@ -7,11 +7,18 @@ In this page you will learn more on how Skog uses Async Context and how the func
 
 ---
 
-- The function **runWithSkogContext** receives two arguments: `fields` (an object) and `callback` (a zero-argument function).
+- The function **runWithSkogContext** receives two arguments: `fields` (an object) and `fn` (a zero-argument function).
 
-  It will create a new context with `fields`. The context will be alive during the execution of the `callback`.
+  It will create a new context with `fields` and **execute** `fn`. The context will be alive during the execution of the `fn`.
 
-  It will return the same value as the value returned by the callback.
+  `runWithSkogContext` will return the same value as the value returned by `fn`. This is specially useful when you are passing async functions as callback. In that case `runWithContext` will return a `Promise` that can be awaited:
+
+  ```ts
+  // `p` is the promise returned by the `f` function
+  const p = await runWithSkogContext({ id: 3 }, async function f() {
+    // ...
+  });
+  ```
 
 - The function **getFields** returns the `fields` in the current execution context. Will return null if no fields are set or if called outside of an execution context.
 
