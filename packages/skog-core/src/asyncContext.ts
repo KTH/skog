@@ -64,5 +64,5 @@ export function runWithSkog<T>(fields: Fields, fn: () => T): T {
  * context
  */
 export function skogMiddleware(req: unknown, res: unknown, next: () => void) {
-  runWithSkog({ req_id: uid() }, next);
+  runWithSkog({ ...getFields(), req_id: uid() }, next);
 }
