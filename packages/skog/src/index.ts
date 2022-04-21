@@ -45,6 +45,6 @@ export {
   LogFunction,
   Logger,
   LEVEL_NUMBERS,
-  runWithSkogContext,
+  runWithSkog,
   skogMiddleware,
 } from "skog-core";

@@ -51,7 +51,7 @@ export function addSkogContext<Args extends any[], Ret extends unknown>(
  *
  * Returns whatever is returned by the function.
  */
-export function runWithSkogContext<T>(fields: Fields, fn: () => T): T {
+export function runWithSkog<T>(fields: Fields, fn: () => T): T {
   return addSkogContext(() => {
     setFields(fields);
 
@@ -64,5 +64,5 @@ export function runWithSkogContext<T>(fields: Fields, fn: () => T): T {
  * context
  */
 export function skogMiddleware(req: unknown, res: unknown, next: () => void) {
-  runWithSkogContext({ ...getFields(), req_id: uid() }, next);
+  runWithSkog({ req_id: uid() }, next);
 }
