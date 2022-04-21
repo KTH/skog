@@ -6,6 +6,7 @@
   "scripts": {
     "format": "prettier --write .",
     "test": "jest",
+    "test:watch": "jest --watch",
     "test:format": "prettier --check .",
     "test:lint": "TODO",
     "build": "lerna run build",

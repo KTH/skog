@@ -5,7 +5,7 @@ export {
   addSkogContext,
   getFields,
   setFields,
-  runWithSkogContext,
+  runWithSkog,
   skogMiddleware,
 } from "skog-core";
 export {

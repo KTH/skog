@@ -1,8 +1,4 @@
-import log, {
-  skogMiddleware,
-  runWithSkogContext,
-  initializeLogger,
-} from "../src/index";
+import log, { skogMiddleware, initializeLogger } from "../src/index";
 import express from "express";
 import { setTimeout } from "timers/promises";
 import http from "http";

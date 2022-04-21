@@ -1,7 +1,4 @@
-import log, {
-  initializeLogger,
-  runWithSkogContext,
-} from "../packages/skog-pino/src";
+import log, { initializeLogger, runWithSkog } from "../packages/skog-pino/src";
 import { format } from "util";
 
 let result: string[] = [];
@@ -61,7 +58,7 @@ describe("skog with pino", () => {
   describe("with context", () => {
     describe("with only one argument", () => {
       test("argument of type `Error`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info(new Error("Some error"));
         });
 
@@ -70,7 +67,7 @@ describe("skog with pino", () => {
       });
 
       test("argument of type `object`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info({ a: 3 });
         });
 
@@ -78,7 +75,7 @@ describe("skog with pino", () => {
         expect(result[0]).toContain('"a":3');
       });
       test("argument of type `string`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info("Hello world");
         });
 
@@ -89,7 +86,7 @@ describe("skog with pino", () => {
 
     describe("with two arguments (second argument = string)", () => {
       test("first argument of type `Error`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info(new Error("Some error"), "There is an error");
         });
 
@@ -99,7 +96,7 @@ describe("skog with pino", () => {
       });
 
       test("first argument of type `object`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info({ a: 3 }, "Hello world");
         });
 
