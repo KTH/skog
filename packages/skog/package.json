@@ -1,6 +1,6 @@
 {
   "name": "skog",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "pino": "^7.9.1",
-    "skog-core": "^1.0.0",
-    "skog-pino": "^1.0.0"
+    "skog-core": "^1.0.1",
+    "skog-pino": "^1.0.1"
   }
 }
