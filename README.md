@@ -8,40 +8,87 @@ Add <em>context</em> to your Node.js logs
 
 # Getting started
 
-Skog lets you add context to your logs without hassle. For example, if you have a Express server and want to add a field called `req_id` to every log so you can group logs by request, use the `skogMiddleware`
+Skog is a opinionated logging library built on top of Pino.
+
+```
+npm install skog
+```
 
 ```ts
-import { skogMiddleware } from "skog";
+import log, { initializeLogger } from "skog";
+
+initializeLogger();
+setFields({ app: "my-app" });
+log.info("Hello world");
+```
+
+## Add `req_id` to every log
+
+Use `skogMiddleware` with an express server. It will add `req_id` to every log line.
+
+```ts
+import log, { initializeLogger, skogMiddleware, setFields } from "skog";
 import express from "express";
 
 const app = express();
+
+const app = express();
 app.use(skogMiddleware);
+app.get("/", () => {
+  // This will log "req_id" automatically! You don't need to do anything else!
+  log.info("Logging a message");
+});
+
+initializeLogger();
+setFields({ app: "demo" });
+app.listen(3000, () => {
+  log.info("Starting server");
+});
 ```
 
-Then, you can use skog anywhere to just log stuff:
+# Features
 
-```ts
-import log from "skog";
+`skog` is heavily opinionated:
 
-export function getUser(id) {
-  // ...
-  log.info(`Getting user with ID ${id}`);
-}
-```
+- It uses the "bunyan" convention. Logging methods are called `trace`, `debug`, `info`, `warn`, `error` and `fatal`
+- `initializeLogger` will activate Pino. After the initialization, all logs will be output as JSONLD format
+- Before initialization, `skog` will use `console` to print logs.
 
 # How it works
 
-[ TODO ]
+`skog` exports more functions so you can create your own middleware. For example, if you want to add your own fields or if you want to create middleware for other frameworks.
 
-Skog uses **Pino.js** for sending structured logs to the console
+## Add other fields
 
-# Recipes
+Example: add a "session_id" field in your logs
 
-Skog offers you a simple interface to be able to make your own integrations easily, for example:
+```ts
+import { runWithSkog } from "skog";
+import { nanoid } from "nanoid";
 
-- **Create a middleware for different web frameworks**.
-- **Add different attributes to the logs**. For example, you might want to add _session ID_ or _user ID_
+function myMiddleware(req, res, next) {
+  // Assuming that "req.session.id" exists...
+  runWithSkog({ req_id: nanoid(), session_id: req.session.id.slice(-3) }, next);
+}
+```
 
-# API
+## Middleware for other frameworks
 
-[under development]
+As you can see from the example above, `runWithSkog` accepts two arguments: an object with fields and a function. `runWithSkog` will return the same thing as returned by the function.
+
+So, you can create a middleware for Next.js:
+
+```ts
+import { NextResponse } from "next/server";
+import { nanoid } from "nanoid";
+
+function middleware(req: NextRequest, ev: NextFetchEvent) {
+  return runWithSkogContext(
+    {
+      session_id: req.cookies["session_id"]?.slice(-3),
+      req_id: nanoid(),
+    },
+    NextResponse.next
+  );
+}
+```
