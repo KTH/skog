@@ -22,9 +22,7 @@ setFields({ app: "my-app" });
 log.info("Hello world");
 ```
 
-## Add `req_id` to every log
-
-Use `skogMiddleware` with an express server. It will add `req_id` to every log line.
+If your app uses Express, use `skogMiddleware` to add `req_id` to every log line.
 
 ```ts
 import log, { initializeLogger, skogMiddleware, setFields } from "skog";
@@ -46,15 +44,7 @@ app.listen(3000, () => {
 });
 ```
 
-# Features
-
-`skog` is heavily opinionated:
-
-- It uses the "bunyan" convention. Logging methods are called `trace`, `debug`, `info`, `warn`, `error` and `fatal`
-- `initializeLogger` will activate Pino. After the initialization, all logs will be output as JSONLD format
-- Before initialization, `skog` will use `console` to print logs.
-
-# How it works
+# Recipes
 
 `skog` exports more functions so you can create your own middleware. For example, if you want to add your own fields or if you want to create middleware for other frameworks.
 
