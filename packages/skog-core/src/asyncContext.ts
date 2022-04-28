@@ -77,5 +77,5 @@ export function runWithSkog<T>(fields: Fields, fn: () => T): T {
  * Express middleware that adds a field called "req_id" to all logs.
  */
 export function skogMiddleware(req: unknown, res: unknown, next: () => void) {
-  runWithSkog({ req_id: uid() }, next);
+  runWithSkog({ ...getFields(), req_id: uid() }, next);
 }
