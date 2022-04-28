@@ -8,40 +8,46 @@ Add <em>context</em> to your Node.js logs
 
 # Getting started
 
-Skog lets you add context to your logs without hassle. For example, if you have a Express server and want to add a field called `req_id` to every log so you can group logs by request, use the `skogMiddleware`
+Skog is an opinionated logging built on top of Pino and AsyncContext to be able to log context effortlessly
+
+For example, if you have a Express server and want to add a field called `req_id`, you can just use the `skogMiddleware`
 
 ```ts
-import { skogMiddleware } from "skog";
-import express from "express";
-
+const { default: log, skogMiddleware, initializeLogger } = require("skog");
+const express = require("express");
 const app = express();
+
 app.use(skogMiddleware);
+app.get("/", () => {
+  log.info("Logging a message");
+});
+
+initializeLogger();
+app.listen(3000, () => {
+  log.info("Starting server");
+});
 ```
 
-Then, you can use skog anywhere to just log stuff:
+# Continue reading
 
-```ts
-import log from "skog";
+- [Async Context in Node.js](./docs/01-nodejs-context.md). Explains the technology behind Skog.
+- [How Async COntext is used in Skog](./docs/02-skog-context.md). Explains how do we use Async Contexts in Skog and how can you build your own integrations
 
-export function getUser(id) {
-  // ...
-  log.info(`Getting user with ID ${id}`);
-}
-```
-
-# How it works
-
-[ TODO ]
-
-Skog uses **Pino.js** for sending structured logs to the console
+<!--
+# In depth explanation
 
 # Recipes
 
-Skog offers you a simple interface to be able to make your own integrations easily, for example:
+Skog offers you a flexible interface that you can use to make your own integrations easily, for example:
 
-- **Create a middleware for different web frameworks**.
 - **Add different attributes to the logs**. For example, you might want to add _session ID_ or _user ID_
+- **Create a middleware for different web frameworks**.
 
-# API
+# Contribute to Skog
 
-[under development]
+[ todo ]
+
+# API Reference
+
+[ todo ]
+-->
