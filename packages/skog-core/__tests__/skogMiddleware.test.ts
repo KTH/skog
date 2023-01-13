@@ -3,7 +3,6 @@ import express from "express";
 import { setTimeout } from "timers/promises";
 import http from "http";
 import { format } from "util";
-import { runWithSkogContext } from "../src/asyncContext";
 
 // Define a HTTP server and client
 const app = express();

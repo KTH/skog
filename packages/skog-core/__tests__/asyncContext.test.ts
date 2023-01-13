@@ -1,4 +1,4 @@
-import { runWithSkogContext, getFields, setFields } from "../src/asyncContext";
+import { runWithSkog, getFields, setFields } from "../src/asyncContext";
 import { setTimeout } from "timers/promises";
 
 // Helper functions to emulate a console in a very simple way
@@ -28,7 +28,7 @@ describe("asyncContext.getFields", () => {
     printMessage("Hello");
     setFields({ id: "X" });
 
-    const p = runWithSkogContext({ id: "A" }, async () => {
+    const p = runWithSkog({ id: "A" }, async () => {
       await setTimeout(100);
       printMessage("Hello");
     });
@@ -42,7 +42,7 @@ describe("asyncContext.getFields", () => {
 
   test("supports parallel contexts", async () => {
     async function printId(id: string) {
-      return runWithSkogContext({ id }, async () => {
+      return runWithSkog({ id }, async () => {
         await setTimeout(Math.random() * 100);
         printMessage("1");
         await setTimeout(Math.random() * 100);

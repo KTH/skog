@@ -1,4 +1,4 @@
-import log, { Levels, runWithSkogContext } from "../packages/skog-core/src";
+import log, { Levels, runWithSkog } from "../packages/skog-core/src";
 import { format } from "util";
 
 /**
@@ -51,7 +51,7 @@ describe("skog with console", () => {
   describe("with context", () => {
     describe("with only one argument", () => {
       test("argument of type `Error`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info(new Error("Some error"));
         });
 
@@ -60,7 +60,7 @@ describe("skog with console", () => {
       });
 
       test("argument of type `object`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info({ a: 3 });
         });
 
@@ -68,7 +68,7 @@ describe("skog with console", () => {
         expect(result[0]).toContain("a: 3");
       });
       test("argument of type `string`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info("Hello world");
         });
 
@@ -79,7 +79,7 @@ describe("skog with console", () => {
 
     describe("with two arguments (second argument = string)", () => {
       test("first argument of type `Error`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info(new Error("Some error"), "There is an error");
         });
 
@@ -89,7 +89,7 @@ describe("skog with console", () => {
       });
 
       test("first argument of type `object`", () => {
-        runWithSkogContext({ id: 1 }, () => {
+        runWithSkog({ id: 1 }, () => {
           log.info({ a: 3 }, "Hello world");
         });
 
