@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /**
  * Convinience functions around Node.js AsyncLocalStorage
  *
@@ -31,7 +32,7 @@ export function getFields<T = Fields>() {
 /**
  * Replace fields in the current Skog context.
  */
-export function setFields<T = Fields>(newFields: T) {
+export function setFields<T extends Fields = Fields>(newFields: T) {
   const store = logDataStorage.getStore();
 
   if (store) {
@@ -48,7 +49,7 @@ export function setFields<T = Fields>(newFields: T) {
  * NOTE: in almost all cases, you should use `runWithSkog` instead of this
  * function.
  */
-export function addSkogContext<Args extends any[], Ret extends unknown>(
+export function addSkogContext<Args extends any[], Ret>(
   fn: (...args: Args) => Ret
 ): (...args: Args) => Ret {
   return (...args: Args) => {

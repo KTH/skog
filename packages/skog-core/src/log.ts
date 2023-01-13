@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getFields } from "./asyncContext";
 
 export const LEVEL_NUMBERS = {
@@ -41,9 +42,8 @@ function mergeObject(obj: Error | object) {
   }
 }
 
-function print(level: Levels, arg1: string | Error | any, arg2?: unknown) {
+function p(level: Levels, arg1: string | Error | any, arg2?: unknown) {
   const fields = getFields();
-  const a = typeof arg1;
 
   if (!fields && typeof arg1 === "string" && !arg2) {
     // Print "level, string" when there is only a string
@@ -59,10 +59,10 @@ function print(level: Levels, arg1: string | Error | any, arg2?: unknown) {
 }
 
 export const consoleLog: Logger = {
-  fatal: (arg1, arg2?) => print("fatal", arg1, arg2),
-  error: (arg1, arg2?) => print("error", arg1, arg2),
-  warn: (arg1, arg2?) => print("warn", arg1, arg2),
-  info: (arg1, arg2?) => print("info", arg1, arg2),
-  debug: (arg1, arg2?) => print("debug", arg1, arg2),
-  trace: (arg1, arg2?) => print("trace", arg1, arg2),
+  fatal: (arg1, arg2?) => p("fatal", arg1, arg2),
+  error: (arg1, arg2?) => p("error", arg1, arg2),
+  warn: (arg1, arg2?) => p("warn", arg1, arg2),
+  info: (arg1, arg2?) => p("info", arg1, arg2),
+  debug: (arg1, arg2?) => p("debug", arg1, arg2),
+  trace: (arg1, arg2?) => p("trace", arg1, arg2),
 };

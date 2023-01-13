@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Logger as SkogLogger, getFields, Levels } from "skog-core";
 import pino, {
   LoggerOptions as PinoLoggerOptions,
@@ -48,7 +49,7 @@ function mergeObject(obj: Error | object | string) {
   }
 }
 
-function print(level: Levels, arg1: string | Error | any, arg2: unknown) {
+function p(level: Levels, arg1: string | Error | any, arg2: unknown) {
   if (!instance) {
     throw new Error(
       "It is not possible to log stuff before instantiating. Use `initializeLogger` first"
@@ -67,10 +68,10 @@ function print(level: Levels, arg1: string | Error | any, arg2: unknown) {
 
 export { SkogLogger as Logger, PinoLoggerOptions };
 export const log: SkogLogger = {
-  trace: (arg1, arg2?) => print("trace", arg1, arg2),
-  debug: (arg1, arg2?) => print("debug", arg1, arg2),
-  info: (arg1, arg2?) => print("info", arg1, arg2),
-  warn: (arg1, arg2?) => print("warn", arg1, arg2),
-  error: (arg1, arg2?) => print("error", arg1, arg2),
-  fatal: (arg1, arg2?) => print("fatal", arg1, arg2),
+  trace: (arg1, arg2?) => p("trace", arg1, arg2),
+  debug: (arg1, arg2?) => p("debug", arg1, arg2),
+  info: (arg1, arg2?) => p("info", arg1, arg2),
+  warn: (arg1, arg2?) => p("warn", arg1, arg2),
+  error: (arg1, arg2?) => p("error", arg1, arg2),
+  fatal: (arg1, arg2?) => p("fatal", arg1, arg2),
 };

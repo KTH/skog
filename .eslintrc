@@ -1,6 +1,24 @@
 {
-  "extends": ["@kth/eslint-config-kth"],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["@typescript-eslint"],
+  "extends": [
+    "@kth/eslint-config-kth",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "rules": {
-    "no-console": "off"
+    "no-console": "off",
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": ["**/*.test.ts", "**/*.test.tsx"]
+      }
+    ]
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
   }
 }
