@@ -55,6 +55,7 @@ export function addSkogContext<Args extends any[], Ret>(
   return (...args: Args) => {
     const currentFields = getFields();
 
+    // TODO: is this correct? This will change the logDataStorage used by other contexts, since the scope of the variable is the top of this file
     return logDataStorage.run({ fields: currentFields }, () => fn(...args));
   };
 }
